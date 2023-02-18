@@ -1,16 +1,15 @@
-﻿using ReactiveUI;
+﻿using ClientApp.Views;
+using ReactiveUI;
 using Server;
+using Splat;
 using System.Reactive;
 
 namespace ClientApp.ViewModels
 {
     public class UpdateClientViewModel : ReactiveObject, IRoutableViewModel
     {
-        public string? UrlPathSegment { get; } = "UpdateClientViewModel";
 
-        public IScreen HostScreen { get; }
-
-        public RoutingState RouterToHomePage { get; } = new RoutingState();
+        public RoutingState Router { get; } = new RoutingState();
         public ReactiveCommand<Unit, IRoutableViewModel> GoToHomePage { get; }
 
         //Holds value of first name before update
@@ -23,21 +22,21 @@ namespace ClientApp.ViewModels
         public static string CurrentEmail = string.Empty;
 
         //Holds value of first name to update
-        public string ClientFirstNameInfo { get; set; }
+        public string ClientFirstNameInfo { get; set; } = string.Empty;
         
         //Holds value of last name to update
-        public string ClientLastNameInfo { get; set; }
+        public string ClientLastNameInfo { get; set; } = string.Empty;
         
         //Holds value of phone number to update
-        public string ClientPhoneNumberInfo { get; set; }
+        public string ClientPhoneNumberInfo { get; set; } = string.Empty;
         
         //Holds value of email to update
-        public string ClientEmailInfo { get; set; }
+        public string ClientEmailInfo { get; set; } = string.Empty;
 
         public UpdateClientViewModel()
         {
-            GoToHomePage = ReactiveCommand.CreateFromObservable(
-             () => RouterToHomePage.Navigate.Execute(new HomePageViewModel()));
+            Locator.CurrentMutable.Register(() => new HomePage(), typeof(IViewFor<HomePageViewModel>));
+            GoToHomePage = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new HomePageViewModel()));
 
             var client = new Client.ClientClient(Program.gRPCChannel);
 
@@ -131,6 +130,11 @@ namespace ClientApp.ViewModels
         {
             ClientEmailInfo = CurrentEmail;
         }
+
+        //This is for the IRoutableViewModel class
+        public string? UrlPathSegment => throw new System.NotImplementedException();
+        //This is for the IRoutableViewModel class
+        public IScreen HostScreen => throw new System.NotImplementedException();
 
     }
 }

@@ -10,34 +10,49 @@
    x:DataType="vm:LoginPageViewModel"
    xmlns:reactiveUi="http://reactiveui.net"
    xmlns:vm="using:ClientApp.ViewModels"
-   mc:Ignorable="d">
-
-	<UserControl.Styles>
-		<Style Selector="Button">
-			<Setter Property="Background" Value="#161616"/>
-			<Setter Property="CornerRadius" Value="80"/>
-
-		</Style>
-	</UserControl.Styles>
-
-
-	<rxui:RoutedViewHost Grid.Row="0" Router="{Binding Router}" PageTransition="{x:Null}">
-		<rxui:RoutedViewHost.DefaultContent>
-			<Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="*,*,*">
-				<TextBlock Text="Login" Grid.Row="0" Grid.Column="1" FontSize="30.0" HorizontalAlignment="Center" Margin="0 50 0 0"/>
-				<TextBlock  Text="Username" Grid.Row="1" Grid.Column="1" FontSize="20" HorizontalAlignment="Center" Margin="0 20 0 0"/>
-				<TextBox x:Name="UsernameInput" Text="{CompiledBinding UserName}" Width="200" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center"/>
-				<TextBlock Text="Password" FontSize="20" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Margin="0 20 0 0"/>
-				<TextBox x:Name="PasswordInput" Text="{CompiledBinding Password}" Width="200" PasswordChar="*" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center"/>
-				<Button x:Name="loginBtn" Command="{Binding LoginCommand}" Content="Login" Grid.Row="5" Grid.Column="1" Width="150" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="25" HorizontalAlignment="Center" Margin="0 20 0 0"/>
-				<TextBlock x:Name="Warning" Foreground="#d10202" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center" Margin="0 20 0 0"/>
-				
-				
+	xmlns:Views="using:ClientApp.Views"
+   mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="650"
+	>
+	
+	<UserControl.Resources>
+		<DataTemplate x:Key="LoginWithOutError" DataType="{x:Type vm:LoginPageViewModel}">
+				<Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="*">
+					<Border Width="500" Height="500" BorderBrush="White" BorderThickness="2" CornerRadius="3" Padding="4">
+						<StackPanel>
+							<TextBlock Text="Login" Classes="h1 horizontalCenter" Grid.Row="0" Grid.Column="0" Margin="0 50 0 0"/>
+							<TextBlock  Text="Username" Classes="h2 horizontalCenter" Grid.Row="1" Grid.Column="0" Margin="0 20 0 0"/>
+							<TextBox x:Name="UsernameInput" Classes="short horizontalCenter" Text="{CompiledBinding UserName}" Grid.Row="2" Grid.Column="0"/>
+							<TextBlock Text="Password" Classes="h2 horizontalCenter" Grid.Row="3" Grid.Column="0"  Margin="0 20 0 0"/>
+							<TextBox x:Name="PasswordInput" Classes="password horizontalCenter" Text="{CompiledBinding Password}"  Grid.Row="4" Grid.Column="0"/>
+							<Button x:Name="loginBtn" Classes="horizontalCenter" Command="{Binding LoginCommand}" Content="Login" Grid.Row="5" Grid.Column="0" Margin="0 20 0 0"/>
+						</StackPanel>
+					</Border>
+				</Grid>
+		</DataTemplate>
+		<DataTemplate x:Key="LoginWithError" DataType="{x:Type vm:LoginPageViewModel}">
+			<Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="*">
+				<Border Width="500" Height="500" BorderBrush="White" BorderThickness="2" CornerRadius="3" Padding="4">
+					<StackPanel>
+						<TextBlock Text="Login" Classes="h1 horizontalCenter" Grid.Row="0" Grid.Column="0" Margin="0 50 0 0"/>
+						<TextBlock  Text="Username" Classes="h2 horizontalCenter" Grid.Row="1" Grid.Column="0" Margin="0 20 0 0"/>
+						<TextBox x:Name="UsernameInput" Classes="short horizontalCenter" Text="{CompiledBinding UserName}" Grid.Row="2" Grid.Column="0"/>
+						<TextBlock Text="Password" Classes="h2 horizontalCenter" Grid.Row="3" Grid.Column="0"  Margin="0 20 0 0"/>
+						<TextBox x:Name="PasswordInput" Classes="password horizontalCenter" Text="{CompiledBinding Password}"  Grid.Row="4" Grid.Column="0"/>
+						<Button x:Name="loginBtn" Classes="horizontalCenter" Command="{Binding LoginCommand}" Content="Login" Grid.Row="5" Grid.Column="0" Margin="0 20 0 0"/>
+						<TextBlock x:Name="Warning" Classes="h3 horizontalCenter" Text="{Binding WarningMessage}" Foreground="#d10202" Grid.Row="6" Grid.Column="0" Margin="0 20 0 0"/>
+					</StackPanel>
+				</Border>
 			</Grid>
+		</DataTemplate>
+	</UserControl.Resources>
+
+			<rxui:RoutedViewHost Grid.Row="0" Router="{Binding Router}">
+		<rxui:RoutedViewHost.DefaultContent>
+			<StackPanel>
+				<ContentControl Content="{Binding}" ContentTemplate="{StaticResource LoginWithOutError}" IsVisible="{Binding LoggingIn}"/>
+				<ContentControl Content="{Binding}" ContentTemplate="{StaticResource LoginWithError}" IsVisible="{Binding !LoggingIn}"/>
+			</StackPanel>
 		</rxui:RoutedViewHost.DefaultContent>
-		<rxui:RoutedViewHost.ViewLocator>
-			<!-- See ViewLocator.cs section below -->
-			<app:ViewLocator />
-		</rxui:RoutedViewHost.ViewLocator>
 	</rxui:RoutedViewHost>
+		
 </UserControl>

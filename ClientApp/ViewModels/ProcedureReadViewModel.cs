@@ -1,20 +1,16 @@
-﻿using ReactiveUI;
+﻿using ClientApp.Views;
+using ReactiveUI;
+using Splat;
 using System.Reactive;
 
 namespace ClientApp.ViewModels
 {
     public class ProcedureReadViewModel : ReactiveObject, IRoutableViewModel
     {
-        public string? UrlPathSegment => "ProcedureReadView";
-
-        public IScreen HostScreen { get; }
-
         public string NameOfProcedure { get; set; }
         public string NotesOfProcedure { get; set; }
 
-        public RoutingState ViewPhotosRouter { get; } = new RoutingState();
-        public RoutingState ViewFormRouter { get; } = new RoutingState();
-        public RoutingState ProcedureViewingRouter { get; } = new RoutingState();
+        public RoutingState Router { get; } = new RoutingState();
 
         public ReactiveCommand<Unit, IRoutableViewModel> GoToViewPhotos { get; }
         public ReactiveCommand<Unit, IRoutableViewModel> GoToViewForms { get; }
@@ -27,12 +23,14 @@ namespace ClientApp.ViewModels
             //ClientProcedureListingViewModel.SelectedProcedure
             NameOfProcedure = ClientProcedureListingViewModel.SelectedProcedure.ProcedureName;
             NotesOfProcedure = ClientProcedureListingViewModel.SelectedProcedure.procedureNotes;
-            GoToViewPhotos = ReactiveCommand.CreateFromObservable(
-              () => ViewPhotosRouter.Navigate.Execute(new PhotosViewingViewModel()));
-            GoToViewForms = ReactiveCommand.CreateFromObservable(
-              () => ViewFormRouter.Navigate.Execute(new FormViewingViewModel()));
-            GoBackToListing = ReactiveCommand.CreateFromObservable(
-              () => ProcedureViewingRouter.Navigate.Execute(new ClientProcedureListingViewModel()));
+            Locator.CurrentMutable.Register(() => new PhotosViewingView(), typeof(IViewFor<PhotosViewingViewModel>));
+            GoToViewPhotos = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new PhotosViewingViewModel()));
+
+            Locator.CurrentMutable.Register(() => new FormViewingView(), typeof(IViewFor<FormViewingViewModel>));
+            GoToViewForms = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new FormViewingViewModel()));
+
+            Locator.CurrentMutable.Register(() => new ClientProcedureListingView(), typeof(IViewFor<ClientProcedureListingViewModel>));
+            GoBackToListing = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new ClientProcedureListingViewModel()));
         }
 
         public void GoToFormViewingMenu()
@@ -49,5 +47,10 @@ namespace ClientApp.ViewModels
         {
             GoBackToListing.Execute();
         }
+
+        //This is for the IRoutableViewModel class
+        public string? UrlPathSegment => throw new System.NotImplementedException();
+        //This is for the IRoutableViewModel class
+        public IScreen HostScreen => throw new System.NotImplementedException();
     }
 }

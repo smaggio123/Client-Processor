@@ -1,5 +1,7 @@
-﻿using ReactiveUI;
+﻿using ClientApp.Views;
+using ReactiveUI;
 using Server;
+using Splat;
 using System;
 using System.Reactive;
 
@@ -7,15 +9,11 @@ namespace ClientApp.ViewModels
 {
     public class ProcedureUpdateViewModel : ReactiveObject, IRoutableViewModel
     {
-        public string? UrlPathSegment => throw new NotImplementedException();
-
-        public IScreen HostScreen { get; }
 
         public string _ProcedureName { get; set; }
         public string _ProcedureDescription { get; set; }
 
-        public RoutingState RouterToProcedureListing { get; } = new RoutingState();
-        public RoutingState RouterToEditDocuments { get; } = new RoutingState();
+        public RoutingState Router { get; } = new RoutingState();
         
         public ReactiveCommand<Unit, IRoutableViewModel> NavigateToProcedureListing { get; }
         public ReactiveCommand<Unit, IRoutableViewModel> NavigateToEditDocuments { get; }
@@ -25,10 +23,12 @@ namespace ClientApp.ViewModels
         {
             _ProcedureName = ClientProcedureListingViewModel.ProcedureName;
             _ProcedureDescription = ClientProcedureListingViewModel.ProcedureNotes;
-            NavigateToProcedureListing = ReactiveCommand.CreateFromObservable(
-              () => RouterToProcedureListing.Navigate.Execute(new ClientProcedureListingViewModel()));
-            NavigateToEditDocuments = ReactiveCommand.CreateFromObservable(
-              () => RouterToEditDocuments.Navigate.Execute(new MakeAProcedureViewModel()));
+
+            Locator.CurrentMutable.Register(() => new ClientProcedureListingView(), typeof(IViewFor<ClientProcedureListingViewModel>));
+            NavigateToProcedureListing = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new ClientProcedureListingViewModel()));
+
+            Locator.CurrentMutable.Register(() => new MakeAProcedureView(), typeof(IViewFor<MakeAProcedureViewModel>));
+            NavigateToEditDocuments = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new MakeAProcedureViewModel()));
         }
 
         public void UpdateProcedureCommand()
@@ -57,5 +57,10 @@ namespace ClientApp.ViewModels
         {
             NavigateToEditDocuments.Execute();
         }
+
+        //This is for the IRoutableViewModel class
+        public string? UrlPathSegment => throw new System.NotImplementedException();
+        //This is for the IRoutableViewModel class
+        public IScreen HostScreen => throw new System.NotImplementedException();
     }
 }

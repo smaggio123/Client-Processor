@@ -1,0 +1,61 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <!-- Add Controls for Previewer Here -->
+        </Border>
+    </Design.PreviewWith>
+
+    <!-- Add Styles Here -->
+	<Style Selector="TextBlock.horizonalLeft">
+		<Setter Property="HorizontalAlignment" Value="Left"/>
+	</Style>
+	<Style Selector="TextBlock.horizontalCenter">
+		<Setter Property="HorizontalAlignment" Value="Center"/>
+	</Style>
+	<Style Selector="TextBlock.horizontalRight">
+		<Setter Property="HorizontalAlignment" Value="Right"/>
+	</Style>
+	<Style Selector="TextBlock.verticalTop">
+		<Setter Property="VerticalAlignment" Value="Top"/>
+	</Style>
+	<Style Selector="TextBlock.verticalCenter">
+		<Setter Property="VerticalAlignment" Value="Center"/>
+	</Style>
+	<Style Selector="TextBlock.verticalBottom">
+		<Setter Property="VerticalAlignment" Value="Bottom"/>
+	</Style>
+	<Style Selector="TextBlock.verticalStretch">
+		<Setter Property="VerticalAlignment" Value="Stretch"/>
+	</Style>
+	<Style Selector="TextBlock.h1">
+		<Setter Property="FontSize" Value="35"/>
+	</Style>
+	<Style Selector="TextBlock.h2">
+		<Setter Property="FontSize" Value="25"/>
+	</Style>
+	<Style Selector="TextBlock.h3">
+		<Setter Property="FontSize" Value="15"/>
+	</Style>
+	<Style Selector="TextBlock.p">
+		<Setter Property="FontSize" Value="12"/>
+	</Style>
+	<Style Selector="TextBlock.columnSpan2">
+		<Setter Property="Grid.ColumnSpan" Value="2"/>
+	</Style>
+	<Style Selector="TextBlock.columnSpan3">
+		<Setter Property="Grid.ColumnSpan" Value="3"/>
+	</Style>
+	<Style Selector="TextBlock.columnSpan4">
+		<Setter Property="Grid.ColumnSpan" Value="4"/>
+	</Style>
+	<Style Selector="TextBlock.rowSpan2">
+		<Setter Property="Grid.RowSpan" Value="2"/>
+	</Style>
+	<Style Selector="TextBlock.rowSpan3">
+		<Setter Property="Grid.RowSpan" Value="3"/>
+	</Style>
+	<Style Selector="TextBlock.rowSpan4">
+		<Setter Property="Grid.RowSpan" Value="4"/>
+	</Style>
+</Styles>

@@ -52,7 +52,7 @@ namespace ClientApp.Views
                 ConvertPdfToImage();
             }
         }
-        private global::PdfiumViewer.PdfViewer pdfViewer;
+        //private global::PdfiumViewer.PdfViewer pdfViewer;
         public List<string> ImgPaths { get; set; } = new();
         public void ConvertPdfToImage()
         {

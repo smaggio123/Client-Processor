@@ -1,10 +1,12 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Controls.Selection;
 using ClientApp.Models;
+using ClientApp.Views;
 using Google.Protobuf;
 using GrpcServer.Protos;
 using ReactiveUI;
 using Server;
+using Splat;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,9 +18,6 @@ namespace ClientApp.ViewModels
 {
     public class MakeAProcedureViewModel : ReactiveObject, IRoutableViewModel
     {
-        public string? UrlPathSegment => throw new NotImplementedException();
-        
-        public IScreen HostScreen { get; }
 
         private ObservableCollection<FormModel> _formTemplateList = new();
         public ObservableCollection<FormModel> FormTemplateList
@@ -55,8 +54,7 @@ namespace ClientApp.ViewModels
             }
         }
 
-        public RoutingState RouterToFormMenu { get; } = new RoutingState();
-        public RoutingState RouterToProcedureListing { get; } = new RoutingState();
+        public RoutingState Router { get; } = new RoutingState();
         public ReactiveCommand<Unit, IRoutableViewModel> NavigateToFormMenu { get; }
         public ReactiveCommand<Unit, IRoutableViewModel> NavigateToProcedureListing { get; }
 
@@ -65,16 +63,20 @@ namespace ClientApp.ViewModels
         public MakeAProcedureViewModel()
         {
             ProcedureID = ClientProcedureListingViewModel.Procedure_Id;
-            NavigateToFormMenu = ReactiveCommand.CreateFromObservable(
-                () => RouterToFormMenu.Navigate.Execute(new FormMenuViewModel()));
-            NavigateToProcedureListing = ReactiveCommand.CreateFromObservable(
-                () => RouterToProcedureListing.Navigate.Execute(new ClientProcedureListingViewModel()));
+
+            Locator.CurrentMutable.Register(() => new FormMenuView(), typeof(IViewFor<FormMenuViewModel>));
+            NavigateToFormMenu = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new FormMenuViewModel()));
+            
+            Locator.CurrentMutable.Register(() => new ClientProcedureListingView(), typeof(IViewFor<ClientProcedureListingViewModel>));
+            NavigateToProcedureListing = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new ClientProcedureListingViewModel()));
+
             TemplatesResponse templates = GetTemplateNames();
 
 
             foreach (var template in templates.TemplateNames)
             {
-                FormTemplateList.Add(new FormModel(template.FormTemplateName, null, null));
+                //FormTemplateList.Add(new FormModel(template.FormTemplateName, null, null));
+                FormTemplateList.Add(new FormModel(template.FormTemplateName, string.Empty, Array.Empty<byte>()));
 
             }
 
@@ -100,7 +102,7 @@ namespace ClientApp.ViewModels
 
         public void SelectFormTemplate()
         {
-            _currentlySelectedForms.Add(FormTemplateSelection.SelectedItem);
+            if(FormTemplateSelection.SelectedItem!=null)_currentlySelectedForms.Add(FormTemplateSelection.SelectedItem);
         }
 
         //=============================CREATE.MESSAGE_FOR.PHOTOS===============================
@@ -208,7 +210,7 @@ namespace ClientApp.ViewModels
             {
                 ms.Close();
                 //here
-                MessageBox.Avalonia.MessageBoxManager.GetMessageBoxStandardWindow("title", "File uploaded: "+MetaData.PhotoMeta.PhotoName).Show();
+                await MessageBox.Avalonia.MessageBoxManager.GetMessageBoxStandardWindow("title", "File uploaded: "+MetaData.PhotoMeta.PhotoName).Show();
             }
         }
 
@@ -270,5 +272,9 @@ namespace ClientApp.ViewModels
                 //Console.WriteLine(y[0]);
             }
         }
+        //This is for the IRoutableViewModel class
+        public string? UrlPathSegment => throw new System.NotImplementedException();
+        //This is for the IRoutableViewModel class
+        public IScreen HostScreen => throw new System.NotImplementedException();
     }
 }

@@ -9,8 +9,9 @@ namespace ClientApp.ViewModels
     */
 
 
-    public class ViewModelBase : INotifyPropertyChanged//,IControl
+    public class ViewModelBase //: INotifyPropertyChanged//,IControl
     {
+        /*
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged(string propertyName)
@@ -19,6 +20,7 @@ namespace ClientApp.ViewModels
         }
 
         public virtual void Dispose() { }
+        */
         
     }
     

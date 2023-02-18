@@ -1,7 +1,9 @@
-﻿using GrpcClient;
+﻿using ClientApp.Views;
+using GrpcClient;
 using GrpcServer.Protos;
 //using GrpcServer.Protos;
 using ReactiveUI;
+using Splat;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,11 +19,8 @@ namespace ClientApp.ViewModels
 {
     public class PhotosViewingViewModel : ReactiveObject, IRoutableViewModel
     {
-        public string? UrlPathSegment => "PhotosViewingViewModel";
 
-        public IScreen HostScreen { get; }
-
-        public RoutingState BackRouter { get; } = new RoutingState();
+        public RoutingState Router { get; } = new RoutingState();
 
         public static int ProcedureID { get; set; }
 
@@ -30,8 +29,8 @@ namespace ClientApp.ViewModels
         {
             ProcedureID = ClientProcedureListingViewModel.Procedure_Id;
 
-            GoBack = ReactiveCommand.CreateFromObservable(
-             () => BackRouter.Navigate.Execute(new ProcedureReadViewModel()));
+            Locator.CurrentMutable.Register(() => new ProcedureReadView(), typeof(IViewFor<ProcedureReadViewModel>));
+            GoBack = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new ProcedureReadViewModel()));
             ImageBefore.Clear();
             ImageAfter.Clear();
             CallToDownloadPhotos();
@@ -285,5 +284,10 @@ namespace ClientApp.ViewModels
         {
             GoBack.Execute();
         }
+
+        //This is for the IRoutableViewModel class
+        public string? UrlPathSegment => throw new System.NotImplementedException();
+        //This is for the IRoutableViewModel class
+        public IScreen HostScreen => throw new System.NotImplementedException();
     }
 }

@@ -1,0 +1,82 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <!-- Add Controls for Previewer Here -->
+        </Border>
+    </Design.PreviewWith>
+
+    <!-- Add Styles Here -->
+	<Style Selector="TextBox">
+		<Setter Property="HorizontalAlignment" Value="Center"/>
+		<Setter Property="VerticalContentAlignment" Value="Center"/>
+	</Style>
+	<Style Selector="TextBox.horizontalCenter">
+		<Setter Property="HorizontalAlignment" Value="Center"/>
+	</Style>
+	<Style Selector="TextBox.horizontalLeft">
+		<Setter Property="HorizontalAlignment" Value="Left"/>
+	</Style>
+	<Style Selector="TextBox.horizontalRight">
+		<Setter Property="HorizontalAlignment" Value="Right"/>
+	</Style>
+	<Style Selector="TextBox.verticalTop">
+		<Setter Property="VerticalAlignment" Value="Top"/>
+	</Style>
+	<Style Selector="TextBox.verticalCenter">
+		<Setter Property="VerticalAlignment" Value="Center"/>
+	</Style>
+	<Style Selector="TextBox.verticalBottom">
+		<Setter Property="VerticalAlignment" Value="Bottom"/>
+	</Style>
+	<Style Selector="TextBox.verticalStretch">
+		<Setter Property="VerticalAlignment" Value="Stretch"/>
+	</Style>
+	<Style Selector="TextBox.password">
+		<Setter Property="PasswordChar" Value="*"/>
+		<Setter Property="Width" Value="200"/>
+		<Setter Property="HorizontalAlignment" Value="Center"/>
+	</Style>
+	<Style Selector="TextBox.short">
+		<Setter Property="Width" Value="200"/>
+	</Style>
+	<Style Selector="TextBox.medium">
+		<Setter Property="Width" Value="350"/>
+	</Style>
+	<Style Selector="TextBox.long">
+		<Setter Property="Width" Value="500"/>
+	</Style>
+	<Style Selector="TextBox.longer">
+		<Setter Property="Width" Value="700"/>
+	</Style>
+	<Style Selector="TextBox.h1">
+		<Setter Property="FontSize" Value="35"/>
+	</Style>
+	<Style Selector="TextBox.h2">
+		<Setter Property="FontSize" Value="25"/>
+	</Style>
+	<Style Selector="TextBox.h3">
+		<Setter Property="FontSize" Value="15"/>
+	</Style>
+	<Style Selector="TextBox.p">
+		<Setter Property="FontSize" Value="12"/>
+	</Style>
+	<Style Selector="TextBox.columnSpan2">
+		<Setter Property="Grid.ColumnSpan" Value="2"/>
+	</Style>
+	<Style Selector="TextBox.columnSpan3">
+		<Setter Property="Grid.ColumnSpan" Value="3"/>
+	</Style>
+	<Style Selector="TextBox.columnSpan4">
+		<Setter Property="Grid.ColumnSpan" Value="4"/>
+	</Style>
+	<Style Selector="TextBox.rowSpan2">
+		<Setter Property="Grid.RowSpan" Value="2"/>
+	</Style>
+	<Style Selector="TextBox.rowSpan3">
+		<Setter Property="Grid.RowSpan" Value="3"/>
+	</Style>
+	<Style Selector="TextBox.rowSpan4">
+		<Setter Property="Grid.RowSpan" Value="4"/>
+	</Style>
+</Styles>

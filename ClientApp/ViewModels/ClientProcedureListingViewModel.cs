@@ -1,8 +1,10 @@
 ﻿using Avalonia.Controls.Selection;
 using ClientApp.Models;
+using ClientApp.Views;
 using MessageBox.Avalonia.Enums;
 using ReactiveUI;
 using Server;
+using Splat;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,23 +34,14 @@ namespace ClientApp.ViewModels
             }
             set
             {
-                _selectButtonEnabled = value;
                 //Updates that a value has been selected
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectButtonEnabled)));
+                this.RaiseAndSetIfChanged(ref _selectButtonEnabled,value);
             }
         }
-        public event PropertyChangedEventHandler PropertyChanged;
 
 
-        public IScreen HostScreen { get; }
-
-        public string UrlPathSegment { get; } = "ClientProcedureListing";
 
         public RoutingState Router { get; } = new RoutingState();
-        public RoutingState Router2 { get; } = new RoutingState();
-        public RoutingState GoToReadProcedureRouter { get; } = new RoutingState();
-        public RoutingState GoToInitializeProcedureRouter { get; } = new RoutingState();
-        public RoutingState GoToUpdateProcedureRouter { get; } = new RoutingState();
 
         public ReactiveCommand<Unit, IRoutableViewModel> GoHome { get; }
         public ReactiveCommand<Unit, IRoutableViewModel> MakeProcedurePage { get; }
@@ -105,16 +98,15 @@ namespace ClientApp.ViewModels
             Selection = new SelectionModel<string>();
             Selection.SelectionChanged += SelectionChanged;
 
-            
 
-            GoHome = ReactiveCommand.CreateFromObservable(
-             () => Router.Navigate.Execute(new HomePageViewModel()));
-            GoToReadProcedureView = ReactiveCommand.CreateFromObservable(
-              () => GoToReadProcedureRouter.Navigate.Execute(new ProcedureReadViewModel()));
-            NavigateToInitializeProcedure= ReactiveCommand.CreateFromObservable(
-              () => GoToInitializeProcedureRouter.Navigate.Execute(new InitializeProcedureViewModel()));
-            NavigateToUpdateProcedure = ReactiveCommand.CreateFromObservable(
-              () => GoToUpdateProcedureRouter.Navigate.Execute(new ProcedureUpdateViewModel()));
+            Locator.CurrentMutable.Register(() => new HomePage(), typeof(IViewFor<HomePageViewModel>));
+            GoHome = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new HomePageViewModel()));
+            Locator.CurrentMutable.Register(() => new ProcedureReadView(), typeof(IViewFor<ProcedureReadViewModel>));
+            GoToReadProcedureView = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new ProcedureReadViewModel()));
+            Locator.CurrentMutable.Register(() => new InitializeProcedureView(), typeof(IViewFor<InitializeProcedureViewModel>));
+            NavigateToInitializeProcedure = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new InitializeProcedureViewModel()));
+            Locator.CurrentMutable.Register(() => new ProcedureUpdateView(), typeof(IViewFor<ProcedureUpdateViewModel>));
+            NavigateToUpdateProcedure = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new ProcedureUpdateViewModel()));
         }
 
         
@@ -183,6 +175,11 @@ namespace ClientApp.ViewModels
         //public SelectionModel<ProcedureModel> Selection { get; }
         public SelectionModel<string> Selection { get; }
 
+
+        //This is for the IRoutableViewModel class
+        public string? UrlPathSegment => throw new System.NotImplementedException();
+        //This is for the IRoutableViewModel class
+        public IScreen HostScreen => throw new System.NotImplementedException();
 
     }
 

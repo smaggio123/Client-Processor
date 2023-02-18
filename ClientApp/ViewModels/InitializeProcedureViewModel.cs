@@ -1,5 +1,7 @@
-﻿using ReactiveUI;
+﻿using ClientApp.Views;
+using ReactiveUI;
 using Server;
+using Splat;
 using System;
 using System.Reactive;
 
@@ -7,25 +9,21 @@ namespace ClientApp.ViewModels
 {
     public class InitializeProcedureViewModel : ReactiveObject, IRoutableViewModel
     {
-        public string? UrlPathSegment => throw new NotImplementedException();
-
-        public IScreen HostScreen => throw new NotImplementedException();
-
         public string _ProcedureName { get; set; }
         public string _ProcedureDescription { get; set; }
         public static int CurrentProcedureID { get; set; }
 
-        public RoutingState RouterToMakeProcedure { get; } = new RoutingState();
-        public RoutingState RouterToClientProcedureListing { get; } = new RoutingState();
+        public RoutingState Router { get; } = new RoutingState();
         public ReactiveCommand<Unit, IRoutableViewModel> NavigateToMakeProcedure { get; }
         public ReactiveCommand<Unit, IRoutableViewModel> NavigateToClientProcedureListing { get; }
 
         public InitializeProcedureViewModel()
         {
-            NavigateToMakeProcedure = ReactiveCommand.CreateFromObservable(
-            () => RouterToMakeProcedure.Navigate.Execute(new MakeAProcedureViewModel()));
-            NavigateToClientProcedureListing = ReactiveCommand.CreateFromObservable(
-                () => RouterToClientProcedureListing.Navigate.Execute(new ClientProcedureListingViewModel()));
+            Locator.CurrentMutable.Register(() => new MakeAProcedureView(), typeof(IViewFor<MakeAProcedureViewModel>));
+            NavigateToMakeProcedure = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new MakeAProcedureViewModel()));
+
+            Locator.CurrentMutable.Register(() => new ClientProcedureListingView(), typeof(IViewFor<ClientProcedureListingViewModel>));
+            NavigateToClientProcedureListing = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new ClientProcedureListingViewModel()));
         }
         public void ProceedToMakeProcedure()
         {
@@ -46,5 +44,10 @@ namespace ClientApp.ViewModels
         {
             NavigateToClientProcedureListing.Execute();
         }
+
+        //This is for the IRoutableViewModel class
+        public string? UrlPathSegment => throw new System.NotImplementedException();
+        //This is for the IRoutableViewModel class
+        public IScreen HostScreen => throw new System.NotImplementedException();
     }
 }

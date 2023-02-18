@@ -1,45 +1,42 @@
-﻿using ReactiveUI;
+﻿using ClientApp.Models;
+using ClientApp.Views;
+using ReactiveUI;
+using Splat;
+using System.Collections.ObjectModel;
 using System.Reactive;
 
 namespace ClientApp.ViewModels
 {
     public class EmployeeInformationViewModel : ReactiveObject, IRoutableViewModel
     {
-        public string UrlPathSegment { get; } = "EmployeeInformationView";
-
-        public IScreen HostScreen { get; }
 
         public RoutingState Router { get; } = new RoutingState();
 
         public ReactiveCommand<Unit, IRoutableViewModel> GoToHomePage { get; }
 
-        public string EmployeeFirstNameInfo { get; set; }
-        public string EmployeeLastNameInfo { get; set; }
-        public string EmployeeUserNameInfo { get; set; }
-        public string EmployeeIsAdminInfo { get; set; }
-        
+        private ObservableCollection<EmployeeModel> displayEmployee=new();
+        public ObservableCollection<EmployeeModel> DisplayEmployee
+        {
+            get => displayEmployee;
+            set => this.RaiseAndSetIfChanged(ref displayEmployee, value);
+        }
+
 
         public EmployeeInformationViewModel()
         {
-            GoToHomePage = ReactiveCommand.CreateFromObservable(
-             () => Router.Navigate.Execute(new AdminHomeViewModel()));
-            //AdminHomeViewModel.SelectedEmployee
-            EmployeeFirstNameInfo = AdminHomeViewModel.SelectedEmployee.FirstName;
-            EmployeeLastNameInfo = AdminHomeViewModel.SelectedEmployee.LastName;
-            EmployeeUserNameInfo = AdminHomeViewModel.SelectedEmployee.UserName;
-            if (AdminHomeViewModel.SelectedEmployee.IsAdmin)
-            {
-                EmployeeIsAdminInfo = "Is admin";
-            }
-            else
-            {
-                EmployeeIsAdminInfo = "Not admin";
-            }
+            Locator.CurrentMutable.Register(() => new AdminHomeView(), typeof(IViewFor<AdminHomeViewModel>));
+            GoToHomePage = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new AdminHomeViewModel()));
+            if(AdminHomeViewModel.SelectedEmployee!=null)DisplayEmployee.Add(new EmployeeModel(AdminHomeViewModel.SelectedEmployee.ID,AdminHomeViewModel.SelectedEmployee.FirstName, AdminHomeViewModel.SelectedEmployee.LastName, AdminHomeViewModel.SelectedEmployee.UserName, AdminHomeViewModel.SelectedEmployee.IsAdmin));
         }
 
         public void GoToHomePageCommand()
         {
             GoToHomePage.Execute();
         }
+
+        //This is for the IRoutableViewModel class
+        public string? UrlPathSegment => throw new System.NotImplementedException();
+        //This is for the IRoutableViewModel class
+        public IScreen HostScreen => throw new System.NotImplementedException();
     }
 }

@@ -9,71 +9,29 @@
    x:DataType="vm:AdminHomeViewModel"
    xmlns:reactiveUi="http://reactiveui.net"
    xmlns:vm="using:ClientApp.ViewModels"
-   mc:Ignorable="d">
+   mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="650">
 
-	<UserControl.Styles>
-		<Style Selector="Button">
-			<Setter Property="FontSize" Value="20"/>
-			<Setter Property="Width" Value="125"/>
-			<Setter Property="Height" Value="50"/>
-			<Setter Property="HorizontalContentAlignment" Value="Center"/>
-			<Setter Property="VerticalContentAlignment" Value="Center"/>
-			<Setter Property="Background" Value="#161616"/>
-		</Style>
-	</UserControl.Styles>
-
-	<rxui:RoutedViewHost Grid.Row="0" Router="{Binding RouterRegister}" PageTransition="{x:Null}">
+	<rxui:RoutedViewHost Grid.Row="0" Router="{Binding Router}">
 		<rxui:RoutedViewHost.DefaultContent>
-			<rxui:RoutedViewHost Grid.Row="0" Router="{Binding RouterToImport}" PageTransition="{x:Null}">
-				<rxui:RoutedViewHost.DefaultContent>
-					<rxui:RoutedViewHost Grid.Row="0" Router="{Binding RouterHomePageProcedure}" PageTransition="{x:Null}">
-						<rxui:RoutedViewHost.DefaultContent>
-							<rxui:RoutedViewHost Grid.Row="0" Router="{Binding RouterToViewEmployee}" PageTransition="{x:Null}">
-								<rxui:RoutedViewHost.DefaultContent>
-									<rxui:RoutedViewHost Grid.Row="0" Router="{Binding RouterToUpdateEmployeeInfo}" PageTransition="{x:Null}">
-										<rxui:RoutedViewHost.DefaultContent>
-											<Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto,*" ShowGridLines="False">
-												<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Admin View" FontSize="30.0" Grid.Row="0" Grid.Column="1" Margin="0 50 0 0"/>
+			<Grid HorizontalAlignment="Center" RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*" ShowGridLines="False">
+				<TextBlock Classes="h1 horizontalCenter columnSpan2" Text="Admin View" Grid.Row="0" Grid.Column="0" Margin="0 50 0 0"/>
 
 
-												<Button Content="Home" Command="{Binding GoToHomeFromAdminHomeCommand}" Grid.Row="0" Grid.Column="2" VerticalAlignment="Top" Margin="20 50 0 0"/>
-												<Button Content="Insert Form" Command="{Binding OpenImportFormView}" Grid.Row="0" Grid.Column="2" VerticalAlignment="Top" Margin="150 50 0 0"/>
+				<Button Classes="horizontalLeft smallWidth" Content="Home" Command="{Binding GoToHomeFromAdminHomeCommand}" Grid.Row="0" Grid.Column="1" Margin="20 50 0 0"/>
+				<Button Classes="horizontalRight smallWidth" Content="Insert Form" Command="{Binding OpenImportFormView}" Grid.Row="0" Grid.Column="1" Margin="150 50 0 0"/>
 
-												<StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" Width="500" Margin="0 20 0 0">
-													<Label VerticalAlignment="Center" HorizontalAlignment="Center">Employees</Label>
-													<ScrollViewer  VerticalScrollBarVisibility="Auto">
-														<ListBox Height="300" Items="{Binding Employees}" Selection="{Binding EmployeeSelection}"></ListBox>
-													</ScrollViewer>
-												</StackPanel>
+				<StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" Width="500" Margin="0 20 0 0">
+					<Label VerticalAlignment="Center" HorizontalAlignment="Center">Employees</Label>
+					<ScrollViewer  VerticalScrollBarVisibility="Auto">
+						<ListBox Height="300" Items="{Binding Employees}" Selection="{Binding EmployeeSelection}"></ListBox>
+					</ScrollViewer>
+				</StackPanel>
 
-												<Button Content="Add Employee" Width="175"  Command="{Binding CreateEmployeeCommand}" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" Margin="20 50 0 0"/>
-												<Button Content="Employee Info" Width="175"  IsEnabled="{Binding SelectButtonEnabled}" Command="{Binding GoToReadEmployeeInfoCommand}" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" Margin="20 110 0 0"/>
-												<Button Content="Edit Employee" Width="175"  IsEnabled="{Binding SelectButtonEnabled}" Command="{Binding GoToUpdateEmployeeInfoCommand}" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" Margin="20 170 0 0"/>
+				<Button Content="Add Employee" Classes="verticalTop"  Command="{Binding CreateEmployeeCommand}" Grid.Row="1" Grid.Column="1" Margin="20 50 0 0"/>
+				<Button Content="Employee Info" Classes="verticalTop"  IsEnabled="{Binding SelectButtonEnabled}" Command="{Binding GoToReadEmployeeInfoCommand}" Grid.Row="1" Grid.Column="1" Margin="20 110 0 0"/>
+				<Button Content="Edit Employee" Classes="verticalTop"  IsEnabled="{Binding SelectButtonEnabled}" Command="{Binding GoToUpdateEmployeeInfoCommand}" Grid.Row="1" Grid.Column="1" Margin="20 170 0 0"/>
 
-											</Grid>
-										</rxui:RoutedViewHost.DefaultContent>
-										<rxui:RoutedViewHost.ViewLocator>
-											<app:UpdateEmployeeViewLocator/>
-										</rxui:RoutedViewHost.ViewLocator>
-									</rxui:RoutedViewHost>
-								</rxui:RoutedViewHost.DefaultContent>
-								<rxui:RoutedViewHost.ViewLocator>
-									<app:EmployeeInformationViewLocator />
-								</rxui:RoutedViewHost.ViewLocator>
-							</rxui:RoutedViewHost>
-						</rxui:RoutedViewHost.DefaultContent>
-						<rxui:RoutedViewHost.ViewLocator>
-							<app:ViewLocator />
-						</rxui:RoutedViewHost.ViewLocator>
-					</rxui:RoutedViewHost>
-				</rxui:RoutedViewHost.DefaultContent>
-				<rxui:RoutedViewHost.ViewLocator>
-					<app:ImportViewLocator />
-				</rxui:RoutedViewHost.ViewLocator>
-			</rxui:RoutedViewHost>
+			</Grid>
 		</rxui:RoutedViewHost.DefaultContent>
-		<rxui:RoutedViewHost.ViewLocator>
-			<app:RegisterViewLocator />
-		</rxui:RoutedViewHost.ViewLocator>
 	</rxui:RoutedViewHost>
 </UserControl>

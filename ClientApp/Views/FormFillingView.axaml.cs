@@ -27,7 +27,10 @@ namespace ClientApp.Views
                 TextBlock fieldName = new();
                 fieldName.Text = field.FieldName;
                 this.FindControl<StackPanel>("notes").Children.Add(fieldName);
-                this.FindControl<StackPanel>("notes").Children.Add(new TextBox());
+                TextBox tempBox = new();
+                tempBox.Classes.Add("long");
+                this.FindControl<StackPanel>("notes").Children.Add(tempBox);
+
             }
         }
         public void clickedSumbit(object? sender, RoutedEventArgs e)

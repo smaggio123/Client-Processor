@@ -1,6 +1,8 @@
 ﻿using ClientApp.Models;
+using ClientApp.Views;
 using ReactiveUI;
 using Server;
+using Splat;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,13 +11,9 @@ using System.Reactive;
 
 namespace ClientApp.ViewModels
 {
-    public class FormFillingViewModel : ViewModelBase, IRoutableViewModel
+    public class FormFillingViewModel : ReactiveObject, IRoutableViewModel
     {
-        public string? UrlPathSegment => throw new NotImplementedException();
 
-        public IScreen HostScreen => throw new NotImplementedException();
-
-        public event PropertyChangingEventHandler? PropertyChanging;
 
         public List<FormInputField> InputFields { get; } = new List<FormInputField>();
         public ObservableCollection<string> UserInputList { get; set; } = new ObservableCollection<string>();
@@ -28,7 +26,7 @@ namespace ClientApp.ViewModels
             set
             {
                 _TextInputList = value;
-                OnPropertyChanged(nameof(_TextInputList));
+                this.RaiseAndSetIfChanged(ref _TextInputList, value);
             }
         }
 
@@ -39,14 +37,14 @@ namespace ClientApp.ViewModels
 
         public static List<Server.Field> ListOfFields { get; set; } = new();
 
-        public static RoutingState RouterToFormMenu { get; set; } = new RoutingState();
-        public static ReactiveCommand<Unit, IRoutableViewModel> NavigateToFormMenu { get; set; }
+        public static RoutingState Router { get; set; } = new RoutingState();
+        public static ReactiveCommand<Unit, IRoutableViewModel>? NavigateToFormMenu { get; set; }
         public FormFillingViewModel()
         {
             ListOfFields = new();
-            RouterToFormMenu = new();
-            NavigateToFormMenu = ReactiveCommand.CreateFromObservable(
-                () => RouterToFormMenu.Navigate.Execute(new FormMenuViewModel()));
+            //RouterToFormMenu = new();
+            Locator.CurrentMutable.Register(() => new FormMenuView(), typeof(IViewFor<FormMenuView>));
+            NavigateToFormMenu = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new FormMenuViewModel()));
 
             procedureClient = new Procedure.ProcedureClient(Program.gRPCChannel);
             name = new() { FormName_ = FormMenuViewModel.FormName };
@@ -63,16 +61,12 @@ namespace ClientApp.ViewModels
 
         public void SubmitFormCommand()
         {
-            NavigateToFormMenu.Execute();
-        }
-        public void RaisePropertyChanged(PropertyChangedEventArgs args)
-        {
-            throw new NotImplementedException();
+            if(NavigateToFormMenu!=null)NavigateToFormMenu.Execute();
         }
 
-        public void RaisePropertyChanging(PropertyChangingEventArgs args)
-        {
-            throw new NotImplementedException();
-        }
+        //This is for the IRoutableViewModel class
+        public string? UrlPathSegment => throw new System.NotImplementedException();
+        //This is for the IRoutableViewModel class
+        public IScreen HostScreen => throw new System.NotImplementedException();
     }
 }

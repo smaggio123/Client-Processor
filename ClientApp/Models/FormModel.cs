@@ -1,10 +1,12 @@
-﻿namespace ClientApp.Models
+﻿using System;
+
+namespace ClientApp.Models
 {
     public class FormModel
     {
-        public string FileName { get; }
-        public string FileExtension { get; }
-        public byte [] FileBytes { get; }
+        public string FileName { get; } = string.Empty;
+        public string FileExtension { get; } = string.Empty;
+        public byte[] FileBytes { get; } = Array.Empty<byte>();
         
 
 

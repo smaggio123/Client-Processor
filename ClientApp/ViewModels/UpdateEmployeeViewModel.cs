@@ -1,5 +1,7 @@
-﻿using ReactiveUI;
+﻿using ClientApp.Views;
+using ReactiveUI;
 using Server;
+using Splat;
 using System;
 using System.Reactive;
 
@@ -7,10 +9,7 @@ namespace ClientApp.ViewModels
 {
     public class UpdateEmployeeViewModel : ReactiveObject, IRoutableViewModel
     {
-        public string? UrlPathSegment => throw new NotImplementedException();
-
-        public IScreen HostScreen => throw new NotImplementedException();
-        public RoutingState RouterToAdminHomePage { get; } = new RoutingState();
+        public RoutingState Router { get; } = new RoutingState();
         public ReactiveCommand<Unit, IRoutableViewModel> NavigateToAdminHomePage { get; }
 
         //Holds initial value of first name
@@ -49,8 +48,8 @@ namespace ClientApp.ViewModels
             CurrentUserNameInfo = AdminHomeViewModel.SelectedEmployee.UserName;
             CurrentIsAdminInfo = AdminHomeViewModel.SelectedEmployee.IsAdmin;
 
-            NavigateToAdminHomePage = ReactiveCommand.CreateFromObservable(
-             () => RouterToAdminHomePage.Navigate.Execute(new AdminHomeViewModel()));
+            Locator.CurrentMutable.Register(() => new AdminHomeView(), typeof(IViewFor<AdminHomeViewModel>));
+            NavigateToAdminHomePage = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new AdminHomeViewModel()));
         }
 
         /// <summary>
@@ -134,5 +133,10 @@ namespace ClientApp.ViewModels
         {
             EmployeePasswordInfo = CurrentPasswordInfo;
         }
+
+        //This is for the IRoutableViewModel class
+        public string? UrlPathSegment => throw new System.NotImplementedException();
+        //This is for the IRoutableViewModel class
+        public IScreen HostScreen => throw new System.NotImplementedException();
     }
 }

@@ -6,33 +6,18 @@
 			 xmlns:rxui="clr-namespace:Avalonia.ReactiveUI;assembly=Avalonia.ReactiveUI"
 			 xmlns:app="clr-namespace:ClientApp"
              x:Class="ClientApp.Views.InitializeProcedureView">
-	<UserControl.Styles>
-		<Style Selector="Button">
-			<Setter Property="Background" Value="#161616"/>
-		</Style>
-	</UserControl.Styles>
-
 	
-	<rxui:RoutedViewHost Grid.Row="0" Router="{Binding RouterToMakeProcedure}" PageTransition="{x:Null}">
+	<rxui:RoutedViewHost Grid.Row="0" Router="{Binding Router}">
 		<rxui:RoutedViewHost.DefaultContent>
-	<rxui:RoutedViewHost Grid.Row="0" Router="{Binding RouterToClientProcedureListing}" PageTransition="{x:Null}">
-		<rxui:RoutedViewHost.DefaultContent>
-	<Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="*,*,*">
-		<TextBlock Grid.Row="0" Grid.Column="1" Text="Procedure Type" Margin="0 20 0 0"/>
-		<TextBox Grid.Row="1" Grid.Column="1" Margin="0 10 0 0" Text="{Binding _ProcedureName}"/>
-		<TextBlock Grid.Row="2" Grid.Column="1" Text="Comments/Notes" Margin="0 20 0 0"/>
-		<TextBox Grid.Row="3" Grid.Column="1" Margin="0 10 0 0" Text="{Binding _ProcedureDescription}" TextWrapping="Wrap" Height="100"/>
-		<Button Grid.Row="4" Grid.Column="1" Content="Proceed" Command="{Binding ProceedToMakeProcedure}"  FontSize="25" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="0 20 0 0"/>
-		<Button Grid.Row="5" Grid.Column="1" Content="Back" Command="{Binding BackCommand}" FontSize="25" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="0 20 0 0"/>
-	</Grid>
+			<Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="*">
+				<TextBlock Classes="h2 horizontalCenter" Grid.Row="0" Grid.Column="0" Text="Procedure Type" Margin="0 20 0 0"/>
+				<TextBox Classes="h3 horizontalCenter longer" Grid.Row="1" Grid.Column="0" Margin="0 10 0 0" Text="{Binding _ProcedureName}"/>
+				<TextBlock Classes="h2 horizontalCenter" Grid.Row="2" Grid.Column="0" Text="Comments/Notes" Margin="0 20 0 0"/>
+				<TextBox Classes="h3 horizontalCenter verticalTop longer" VerticalContentAlignment="Top" Grid.Row="3" Grid.Column="0" Margin="0 10 0 0" Text="{Binding _ProcedureDescription}" TextWrapping="Wrap" Height="150"/>
+				<Button Classes="horizontalCenter" Grid.Row="4" Grid.Column="0" Content="Proceed" Command="{Binding ProceedToMakeProcedure}" Margin="0 20 0 0"/>
+				<Button Classes="horizontalCenter" Grid.Row="5" Grid.Column="0" Content="Back" Command="{Binding BackCommand}" Margin="0 20 0 0"/>
+			</Grid>
 		</rxui:RoutedViewHost.DefaultContent>
-		<rxui:RoutedViewHost.ViewLocator>
-			<app:CreateProcedureListingLocator/>
-		</rxui:RoutedViewHost.ViewLocator>
 	</rxui:RoutedViewHost>
-	</rxui:RoutedViewHost.DefaultContent>
-		<rxui:RoutedViewHost.ViewLocator>
-		<app:MakeAProcedureViewLocator/>
-	</rxui:RoutedViewHost.ViewLocator>
-	</rxui:RoutedViewHost>
+	
 </UserControl>

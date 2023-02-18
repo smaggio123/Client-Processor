@@ -8,69 +8,28 @@
    x:Class="ClientApp.Views.ClientProcedureListingView"
    xmlns:reactiveUi="http://reactiveui.net"
    xmlns:vm="using:ClientApp.ViewModels"
-   mc:Ignorable="d">
+   mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="650">
 
-	<UserControl.Styles>
-		<Style Selector="Button">
-			<Setter Property="FontSize" Value="20"/>
-			<Setter Property="Width" Value="125"/>
-			<Setter Property="Height" Value="50"/>
-			<Setter Property="HorizontalContentAlignment" Value="Center"/>
-			<Setter Property="Background" Value="#161616"/>
-		</Style>
-	</UserControl.Styles>
-
-	
-	<rxui:RoutedViewHost Grid.Row="0" Router="{Binding Router}" PageTransition="{x:Null}">
-		<rxui:RoutedViewHost.DefaultContent>
-
-			<rxui:RoutedViewHost Grid.Row="0" Router="{Binding GoToReadProcedureRouter}" PageTransition="{x:Null}">
-				<rxui:RoutedViewHost.DefaultContent>
-					
-					<rxui:RoutedViewHost Grid.Row="0" Router="{Binding GoToInitializeProcedureRouter}" PageTransition="{x:Null}">
-						<rxui:RoutedViewHost.DefaultContent>
-
-							<rxui:RoutedViewHost Grid.Row="0" Router="{Binding GoToUpdateProcedureRouter}" PageTransition="{x:Null}">
-								<rxui:RoutedViewHost.DefaultContent>
-								
-									<Grid HorizontalAlignment="Center" RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto,Auto">
-										<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Procedure Listing" FontSize="30.0" Grid.Row="0" Grid.Column="1" Margin="0 50 0 0"/>
-										<Button Content="Home" Command="{Binding GoHomeCommand}" Grid.Row="0" Grid.Column="2" Margin="20 50 0 0"/>
+	<rxui:RoutedViewHost Grid.Row="0" Router="{Binding Router}">
+		<rxui:RoutedViewHost.DefaultContent>			
+			<Grid HorizontalAlignment="Center" RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto,Auto">
+				<TextBlock Classes="h1 horizontalCenter verticalCenter" Text="Procedure Listing" Grid.Row="0" Grid.Column="1" Margin="0 50 0 0"/>
+				<Button Content="Home" Command="{Binding GoHomeCommand}" Grid.Row="0" Grid.Column="2" Margin="20 50 0 0"/>
 
 
-										<StackPanel Grid.Row="1" Grid.Column="1" Width="500" Margin="0 20 0 0">
-											<Label VerticalAlignment="Center" HorizontalAlignment="Center">List</Label>
-											<ScrollViewer VerticalScrollBarVisibility="Auto">
-												<ListBox Height="300" Items="{Binding DisplayedProcedures}" Selection="{Binding Selection}"></ListBox>
-											</ScrollViewer>
-										</StackPanel>
+				<StackPanel Grid.Row="1" Grid.Column="1" Width="500" Margin="0 20 0 0">
+					<Label VerticalAlignment="Center" HorizontalAlignment="Center">List</Label>
+					<ScrollViewer VerticalScrollBarVisibility="Auto">
+						<ListBox Height="300" Items="{Binding DisplayedProcedures}" Selection="{Binding Selection}"></ListBox>
+					</ScrollViewer>
+				</StackPanel>
 
-										<Button Content="Create Procedure" Width="200" Command="{Binding GoToMakeProcedurePageCommand}" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" Margin="20 50 0 0"/>
-										<Button Content="Read Procedure"  Width="200" IsEnabled="{Binding SelectButtonEnabled}" Command="{Binding GoToReadProcedurePageCommand}" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" Margin="20 110 0 0"/>
-										<Button Content="Delete Procedure" Width="200" IsEnabled="{Binding SelectButtonEnabled}" Command="{Binding DeleteProcedureCommand}" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" Margin="20 170 0 0"/>
-										<Button Content="Update Procedure" Width="200" IsEnabled="{Binding SelectButtonEnabled}" Command="{Binding GoToUpdateProcedurePageCommand}" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" Margin="20 230 0 0"/>
-									</Grid>
-								</rxui:RoutedViewHost.DefaultContent>
-								<rxui:RoutedViewHost.ViewLocator>
-									<app:ProcedureUpdateViewLocator/>
-								</rxui:RoutedViewHost.ViewLocator>
-							</rxui:RoutedViewHost>
-							
-						</rxui:RoutedViewHost.DefaultContent>
-						<rxui:RoutedViewHost.ViewLocator>
-							<app:InitializeProcedureViewLocator/>
-						</rxui:RoutedViewHost.ViewLocator>
-					</rxui:RoutedViewHost>
-				
-				</rxui:RoutedViewHost.DefaultContent>
-				<rxui:RoutedViewHost.ViewLocator>
-					<app:ProcedureReadViewLocator />
-				</rxui:RoutedViewHost.ViewLocator>
-			</rxui:RoutedViewHost>
-			
+				<Button Content="Create Procedure" Classes="veryLargeWidth verticalTop" Command="{Binding GoToMakeProcedurePageCommand}" Grid.Row="1" Grid.Column="2" Margin="20 50 0 0"/>
+				<Button Content="Read Procedure" Classes="veryLargeWidth verticalTop" IsEnabled="{Binding SelectButtonEnabled}" Command="{Binding GoToReadProcedurePageCommand}" Grid.Row="1" Grid.Column="2" Margin="20 110 0 0"/>
+				<Button Content="Delete Procedure" Classes="veryLargeWidth verticalTop" IsEnabled="{Binding SelectButtonEnabled}" Command="{Binding DeleteProcedureCommand}" Grid.Row="1" Grid.Column="2" Margin="20 170 0 0"/>
+				<Button Content="Update Procedure" Classes="veryLargeWidth verticalTop" IsEnabled="{Binding SelectButtonEnabled}" Command="{Binding GoToUpdateProcedurePageCommand}" Grid.Row="1" Grid.Column="2" Margin="20 230 0 0"/>
+			</Grid>
 		</rxui:RoutedViewHost.DefaultContent>
-		<rxui:RoutedViewHost.ViewLocator>
-			<app:ViewLocator />
-		</rxui:RoutedViewHost.ViewLocator>
 	</rxui:RoutedViewHost>
+	
 </UserControl>

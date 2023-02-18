@@ -1,0 +1,61 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <!-- Add Controls for Previewer Here -->
+        </Border>
+    </Design.PreviewWith>
+
+    <!-- Add Styles Here -->
+	<Style Selector="Label.horizonalLeft">
+		<Setter Property="HorizontalAlignment" Value="Left"/>
+	</Style>
+	<Style Selector="Label.horizontalCenter">
+		<Setter Property="HorizontalAlignment" Value="Center"/>
+	</Style>
+	<Style Selector="Label.horizontalRight">
+		<Setter Property="HorizontalAlignment" Value="Right"/>
+	</Style>
+	<Style Selector="Label.verticalTop">
+		<Setter Property="VerticalAlignment" Value="Top"/>
+	</Style>
+	<Style Selector="Label.verticalCenter">
+		<Setter Property="VerticalAlignment" Value="Center"/>
+	</Style>
+	<Style Selector="Label.verticalBottom">
+		<Setter Property="VerticalAlignment" Value="Bottom"/>
+	</Style>
+	<Style Selector="Label.verticalStretch">
+		<Setter Property="VerticalAlignment" Value="Stretch"/>
+	</Style>
+	<Style Selector="Label.h1">
+		<Setter Property="FontSize" Value="35"/>
+	</Style>
+	<Style Selector="Label.h2">
+		<Setter Property="FontSize" Value="25"/>
+	</Style>
+	<Style Selector="Label.h3">
+		<Setter Property="FontSize" Value="15"/>
+	</Style>
+	<Style Selector="Label.p">
+		<Setter Property="FontSize" Value="12"/>
+	</Style>
+	<Style Selector="Label.columnSpan2">
+		<Setter Property="Grid.ColumnSpan" Value="2"/>
+	</Style>
+	<Style Selector="Label.columnSpan3">
+		<Setter Property="Grid.ColumnSpan" Value="3"/>
+	</Style>
+	<Style Selector="Label.columnSpan4">
+		<Setter Property="Grid.ColumnSpan" Value="4"/>
+	</Style>
+	<Style Selector="Label.rowSpan2">
+		<Setter Property="Grid.RowSpan" Value="2"/>
+	</Style>
+	<Style Selector="Label.rowSpan3">
+		<Setter Property="Grid.RowSpan" Value="3"/>
+	</Style>
+	<Style Selector="Label.rowSpan4">
+		<Setter Property="Grid.RowSpan" Value="4"/>
+	</Style>
+</Styles>

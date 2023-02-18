@@ -1,19 +1,18 @@
-﻿using ReactiveUI;
+﻿using ClientApp.Views;
+using ReactiveUI;
 using Server;
+using Splat;
 using System;
 using System.ComponentModel;
 using System.Reactive;
 
 namespace ClientApp.ViewModels
 {
-    public class RegisterEmployeeViewModel : ViewModelBase,IRoutableViewModel
+    public class RegisterEmployeeViewModel : ReactiveObject, IRoutableViewModel
     {
 
-        public IScreen HostScreen { get; }
 
-        public string UrlPathSegment { get; } = "RegisterEmployee";
-
-        public RoutingState RouterAdmimHomePageProcedure { get; } = new RoutingState();
+        public RoutingState Router { get; } = new RoutingState();
 
         public ReactiveCommand<Unit, IRoutableViewModel> GoToAdminHome { get; }
 
@@ -22,10 +21,10 @@ namespace ClientApp.ViewModels
         /// </summary>
         public RegisterEmployeeViewModel()
         {
-            GoToAdminHome = ReactiveCommand.CreateFromObservable(
-             () => RouterAdmimHomePageProcedure.Navigate.Execute(new AdminHomeViewModel()));
+            Locator.CurrentMutable.Register(() => new AdminHomeView(), typeof(IViewFor<AdminHomeViewModel>));
+            GoToAdminHome = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new AdminHomeViewModel()));
         }
-        public event PropertyChangingEventHandler? PropertyChanging;
+        //public event PropertyChangingEventHandler? PropertyChanging;
 
         //Holds first name of employee
         public string EmployeeFirstName { get; set; } = string.Empty;
@@ -44,7 +43,8 @@ namespace ClientApp.ViewModels
             set
             {
                 _employeeIsAdmin = value;
-                OnPropertyChanged(nameof(EmployeeIsAdmin));
+                this.RaiseAndSetIfChanged(ref _employeeIsAdmin, value);
+                //OnPropertyChanged(nameof(EmployeeIsAdmin));
             }
         }
 
@@ -97,5 +97,10 @@ namespace ClientApp.ViewModels
         {
             throw new NotImplementedException();
         }
+
+        //This is for the IRoutableViewModel class
+        public string? UrlPathSegment => throw new System.NotImplementedException();
+        //This is for the IRoutableViewModel class
+        public IScreen HostScreen => throw new System.NotImplementedException();
     }
 }

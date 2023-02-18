@@ -2,6 +2,8 @@
 using ReactiveUI;
 using System.Reactive;
 using System.ComponentModel;
+using Splat;
+using ClientApp.Views;
 
 namespace ClientApp.ViewModels
 {
@@ -23,10 +25,30 @@ namespace ClientApp.ViewModels
         //Tracks number of invalid login attempts
         public static int InvalidCredentialsCount { get; set; }
 
+        private int loginAttempts = 0;
+        public int LoginAttempts
+        {
+            get => loginAttempts;
+            set => this.RaiseAndSetIfChanged(ref loginAttempts, value);
+        }
+        private string warningMessage=string.Empty;
+        public string WarningMessage
+        {
+            get => warningMessage;
+            set => this.RaiseAndSetIfChanged(ref warningMessage, value);
+        }
 
-        public IScreen HostScreen { get; }
+        private bool loggingIn = true;
+        public bool LoggingIn
+        {
+            get => loggingIn;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref loggingIn, value);
+            }
+        }
 
-        public string UrlPathSegment { get; } = "Login";
+
 
         // Required by the IScreen interface.
         public RoutingState Router { get; } = new RoutingState();
@@ -40,11 +62,13 @@ namespace ClientApp.ViewModels
         /// </summary>
         public LoginPageViewModel()
         {
+            loginAttempts = 0;
             //Resets count every time this page loads
             InvalidCredentialsCount = 0;
+
+            Locator.CurrentMutable.Register(() => new HomePage(), typeof(IViewFor<HomePageViewModel>));
             //Function for going to home page
-            GoNext = ReactiveCommand.CreateFromObservable(
-              () => Router.Navigate.Execute(new HomePageViewModel()));
+            GoNext = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new HomePageViewModel()));
         }
 
 
@@ -79,8 +103,18 @@ namespace ClientApp.ViewModels
                     //Uncomment if you want a message that lets the user know that they logged in
                     //MessageBox.Avalonia.MessageBoxManager.GetMessageBoxStandardWindow("Success", "User: " + GlobalUserName + ", logged in successfully.").Show();
                 }
+                else
+                {
+                    ++LoginAttempts;
+                    WarningMessage = "Invalid credentials (" + LoginAttempts + ")";
+                    LoggingIn = false;
+                }
             }
 
         }
+        //This is for the IRoutableViewModel class
+        public string? UrlPathSegment => throw new System.NotImplementedException();
+        //This is for the IRoutableViewModel class
+        public IScreen HostScreen => throw new System.NotImplementedException();
     }
 }

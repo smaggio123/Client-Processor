@@ -1,15 +1,13 @@
+using ClientApp.Views;
 using ReactiveUI;
+using Splat;
 
 namespace ClientApp.ViewModels
 {
     public class MainWindowViewModel : ReactiveObject, IRoutableViewModel
     {
-        public IScreen HostScreen { get; }
 
-        public string UrlPathSegment { get; } = "Login";
-
-        // Required by the IScreen interface.
-        public RoutingState RouterToLogin { get; } = new RoutingState();
+        public RoutingState Router{ get; } = new RoutingState();
 
         
 
@@ -20,9 +18,16 @@ namespace ClientApp.ViewModels
         /// </summary>
         public MainWindowViewModel()
         {
-            RouterToLogin.Navigate.Execute(new LoginPageViewModel());
+            Locator.CurrentMutable.Register(() => new LoginPage(), typeof(IViewFor<LoginPageViewModel>));
+            Router.Navigate.Execute(new LoginPageViewModel());
+            
             
         }
+
+        //This is for the IRoutableViewModel class
+        public string? UrlPathSegment => throw new System.NotImplementedException();
+        //This is for the IRoutableViewModel class
+        public IScreen HostScreen => throw new System.NotImplementedException();
 
     }
 }

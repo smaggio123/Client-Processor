@@ -1,11 +1,11 @@
+using Avalonia.Controls;
+using Avalonia.Controls.Templates;
 using ClientApp.ViewModels;
-using ClientApp.Views;
-using ReactiveUI;
 using System;
 
 namespace ClientApp
 {
-    /*
+
     public class ViewLocator : IDataTemplate
     {
         public IControl Build(object data)
@@ -28,7 +28,8 @@ namespace ClientApp
             return data is ViewModelBase;
         }
     }
-    */
+    
+    /*
     public class ViewLocator : ReactiveUI.IViewLocator
     {
 
@@ -41,5 +42,6 @@ namespace ClientApp
         };
 
     }
+    */
 
 }

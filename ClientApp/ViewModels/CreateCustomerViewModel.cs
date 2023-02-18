@@ -1,18 +1,16 @@
-﻿using ReactiveUI;
+﻿using ClientApp.Views;
+using ReactiveUI;
 using Server;
+using Splat;
 using System;
 using System.ComponentModel;
 using System.Reactive;
 
 namespace ClientApp.ViewModels
 {
-    public class CreateCustomerViewModel:ViewModelBase, IRoutableViewModel
+    public class CreateCustomerViewModel:ReactiveObject, IRoutableViewModel
     {
-        
-        public IScreen HostScreen { get; }
-
-        public string UrlPathSegment { get; } = "CreateCustomer";
-        public RoutingState RouterHomePage { get; } = new RoutingState();
+        public RoutingState Router { get; } = new RoutingState();
 
         public ReactiveCommand<Unit, IRoutableViewModel> GoHome { get; }
         //Holds input for first name of client
@@ -26,12 +24,19 @@ namespace ClientApp.ViewModels
 
         //Holds input for phone number of client
         public string PhoneNumber { get; set; } = string.Empty;
-        public event PropertyChangingEventHandler? PropertyChanging;
+
+
+        private bool buttonVisible = false;
+        public bool ButtonVisible
+        {
+            get => buttonVisible;
+            set => this.RaiseAndSetIfChanged(ref buttonVisible, value);
+        }
 
         public CreateCustomerViewModel()
         {
-            GoHome = ReactiveCommand.CreateFromObservable(
-             () => RouterHomePage.Navigate.Execute(new HomePageViewModel()));
+            Locator.CurrentMutable.Register(() => new HomePage(), typeof(IViewFor<HomePageViewModel>));
+            GoHome = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new HomePageViewModel()));
         }
 
         /// <summary>
@@ -58,6 +63,10 @@ namespace ClientApp.ViewModels
 
                 GoHome.Execute();
             }
+            else
+            {
+                ButtonVisible = true;
+            }
         }
         /// <summary>
         /// Takes user to the home page
@@ -67,14 +76,9 @@ namespace ClientApp.ViewModels
             GoHome.Execute();
         }
 
-        public void RaisePropertyChanging(PropertyChangingEventArgs args)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RaisePropertyChanged(PropertyChangedEventArgs args)
-        {
-            throw new NotImplementedException();
-        }
+        //This is for the IRoutableViewModel class
+        public string? UrlPathSegment => throw new System.NotImplementedException();
+        //This is for the IRoutableViewModel class
+        public IScreen HostScreen => throw new System.NotImplementedException();
     }
 }

@@ -9,24 +9,25 @@
    x:DataType="vm:MainWindowViewModel"
    xmlns:reactiveUi="http://reactiveui.net"
    xmlns:vm="using:ClientApp.ViewModels"
-   mc:Ignorable="d">
+   WindowState="Maximized"
+   mc:Ignorable="d"  d:DesignWidth="700" d:DesignHeight="650" >
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-
-
-	<rxui:RoutedViewHost Grid.Row="0" Router="{Binding RouterToLogin}">
-		<rxui:RoutedViewHost.DefaultContent>
-	<StackPanel Grid.Row="2" Grid.Column="1" Margin="0 20 0 0">
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-	<Button Content="Login" Command="{Binding Login}" HorizontalAlignment="Center" Width="100" HorizontalContentAlignment="Center"/>
+	<!--This moves the elements in the user controls to the middle of the screen vertically-->
+	<StackPanel VerticalAlignment="Center">
+		<rxui:RoutedViewHost Grid.Row="0" Router="{Binding Router}">
+			<rxui:RoutedViewHost.DefaultContent>
+				<!--
+				<StackPanel Grid.Row="2" Grid.Column="1" Margin="0 20 0 0">
+				<TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+				<Button Content="Login" Command="{Binding Login}" HorizontalAlignment="Center" Width="100" HorizontalContentAlignment="Center"/>
+				</StackPanel>
+				-->
+			</rxui:RoutedViewHost.DefaultContent>
+		</rxui:RoutedViewHost>
 	</StackPanel>
-		</rxui:RoutedViewHost.DefaultContent>
-		<rxui:RoutedViewHost.ViewLocator>
-			<!-- See ViewLocator.cs section below -->
-			<app:LoginViewLocator />
-		</rxui:RoutedViewHost.ViewLocator>
-	</rxui:RoutedViewHost>
+	
 </Window>

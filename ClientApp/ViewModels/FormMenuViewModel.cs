@@ -1,7 +1,9 @@
 ﻿using Avalonia.Controls.Selection;
 using ClientApp.Models;
+using ClientApp.Views;
 using GrpcServer.Protos;
 using ReactiveUI;
+using Splat;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,9 +13,6 @@ namespace ClientApp.ViewModels
 {
     public class FormMenuViewModel : ReactiveObject, IRoutableViewModel
     {
-        public string? UrlPathSegment => throw new NotImplementedException();
-
-        public IScreen HostScreen { get; }
         public static List<string> ListOfFilledOutFormNames { get; set; } = new();
 
 
@@ -40,8 +39,7 @@ namespace ClientApp.ViewModels
             }
         }
         public SelectionModel<FormModel> FormTemplateSelection { get; } = new SelectionModel<FormModel>();
-        public RoutingState RouterToMakeProcedure { get; } = new RoutingState();
-        public RoutingState RouterToFillOutForms{ get; set; } = new RoutingState();
+        public RoutingState Router { get; } = new RoutingState();
         public ReactiveCommand<Unit, IRoutableViewModel> NavigateToMakeProcedure{ get; }
         public ReactiveCommand<Unit, IRoutableViewModel> NavigateToFillOutForms{ get; }
 
@@ -57,21 +55,21 @@ namespace ClientApp.ViewModels
             {
                 ListOfFilledOutFormNames.Add(formInformation.FormName);
             }
-            RouterToFillOutForms = new();
+            //RouterToFillOutForms = new();
 
             TemplatesResponse templates = GetTemplateNames();
 
 
             foreach (var template in templates.TemplateNames)
             {
-                FormTemplateList.Add(new FormModel(template.FormTemplateName, null, null));
+                FormTemplateList.Add(new FormModel(template.FormTemplateName, string.Empty, Array.Empty<byte>()));
 
             }
-            NavigateToMakeProcedure = ReactiveCommand.CreateFromObservable(
-                () => RouterToMakeProcedure.Navigate.Execute(new MakeAProcedureViewModel()));
+            Locator.CurrentMutable.Register(() => new MakeAProcedureView(), typeof(IViewFor<MakeAProcedureViewModel>));
+            NavigateToMakeProcedure = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new MakeAProcedureViewModel()));
 
-            NavigateToFillOutForms = ReactiveCommand.CreateFromObservable(
-                () => RouterToFillOutForms.Navigate.Execute(new FormFillingViewModel()));
+            Locator.CurrentMutable.Register(() => new FormFillingView(), typeof(IViewFor<FormFillingViewModel>));
+            NavigateToFillOutForms = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new FormFillingViewModel()));
         }
         public static TemplatesResponse GetTemplateNames()
         {
@@ -106,5 +104,10 @@ namespace ClientApp.ViewModels
         {
             NavigateToMakeProcedure.Execute();
         }
+
+        //This is for the IRoutableViewModel class
+        public string? UrlPathSegment => throw new System.NotImplementedException();
+        //This is for the IRoutableViewModel class
+        public IScreen HostScreen => throw new System.NotImplementedException();
     }
 }

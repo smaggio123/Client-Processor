@@ -5,37 +5,76 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 			 xmlns:rxui="clr-namespace:Avalonia.ReactiveUI;assembly=Avalonia.ReactiveUI"
 			 xmlns:app="clr-namespace:ClientApp"
+			 xmlns:model="clr-namespace:ClientApp.Models"
              x:Class="ClientApp.Views.EmployeeInformationView">
 
-	<UserControl.Styles>
-		<Style Selector="Button">
-			<Setter Property="Background" Value="#161616"/>
-		</Style>
-	</UserControl.Styles>
-
-	<rxui:RoutedViewHost Grid.Row="0" Router="{Binding Router}" PageTransition="{x:Null}"> 
+	<rxui:RoutedViewHost Grid.Row="0" Router="{Binding Router}">
 		<rxui:RoutedViewHost.DefaultContent>
+			<Border Width="700" Height="500" BorderBrush="White" BorderThickness="2" CornerRadius="3" Padding="4">
 			<StackPanel Margin="0 20 0 0">
-				<Grid ColumnDefinitions="*,*,*,*,*" RowDefinitions="Auto, Auto, Auto, Auto,Auto">
-					<TextBlock Grid.Row="0" Grid.Column="1" Text="First Name" Margin="0 10 0 0" />
-					<TextBox Grid.Row="0" Grid.Column="2" Text="{Binding EmployeeFirstNameInfo}" Margin="100 0 0 0" Width="200"/>
+					<Button Content="Back" Command="{Binding GoToHomePageCommand}" Margin="0 0 0 0"/>
+						<StackPanel Margin="0 50 0 0">
+							<ScrollViewer VerticalScrollBarVisibility="Visible">
+								<DataBox x:Name="DataBoxForEmployee" Margin="10"
+											Items="{Binding DisplayEmployee}"
+											CanUserResizeColumns="True"
+											GridLinesVisibility="All" VerticalGridLinesBrush="Gray" HorizontalGridLinesBrush="Gray">
+									<DataBox.Columns>
+										<DataBoxTemplateColumn Header="First Name" Width="*">
+											<DataTemplate DataType="model:EmployeeModel">
+												<Panel Background="Black">
+													<TextBlock Text="{Binding FirstName}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+												</Panel>
+											</DataTemplate>
+										</DataBoxTemplateColumn>
 
-					<TextBlock Grid.Row="1" Grid.Column="1" Text="Last Name" Margin="0 10 0 0" />
-					<TextBox Grid.Row="1" Grid.Column="2" Text="{Binding EmployeeLastNameInfo}" Margin="100 0 0 0" Width="200"/>
+										<DataBoxTemplateColumn Header="Last Name" Width="*">
+											<DataTemplate DataType="model:EmployeeModel">
+												<Panel Background="Black">
+													<TextBlock Text="{Binding LastName}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+												</Panel>
+											</DataTemplate>
+										</DataBoxTemplateColumn>
 
-					<TextBlock Grid.Row="2" Grid.Column="1" Text="User Name" Margin="0 10 0 0" />
-					<TextBox Grid.Row="2" Grid.Column="2" Text="{Binding EmployeeUserNameInfo}" Margin="100 0 0 0" Width="200"/>
+										<DataBoxTemplateColumn Header="User Name" Width="*">
+											<DataTemplate DataType="model:EmployeeModel">
+												<Panel Background="Black">
+													<TextBlock Text="{Binding UserName}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+												</Panel>
+											</DataTemplate>
+										</DataBoxTemplateColumn>
+								
+										<DataBoxTemplateColumn Header="Is Admin" Width="*">
+											<DataTemplate DataType="model:EmployeeModel">
+												<Panel Background="Black">
+													<TextBlock Text="{Binding IsAdmin}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+												</Panel>
+											</DataTemplate>
+										</DataBoxTemplateColumn>
+							</DataBox.Columns>
+						</DataBox>
+					</ScrollViewer>
+				</StackPanel>
+				<!--
+					<Grid ColumnDefinitions="Auto,Auto" RowDefinitions="*,*,*,*" ShowGridLines="False" HorizontalAlignment="Center" VerticalAlignment="Center">
+						<TextBlock Grid.Row="0" Grid.Column="0" Text="First Name" Margin="0 10 0 0" HorizontalAlignment="Center"/>
+						<TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding EmployeeFirstNameInfo}" HorizontalAlignment="Center" Margin="100 0 0 0" Width="200"/>
 
-					<TextBlock Grid.Row="3" Grid.Column="1" Text="Administrative Priviliages" Margin="0 10 0 0" />
-					<TextBox Grid.Row="3" Grid.Column="2" Text="{Binding EmployeeIsAdminInfo}" Margin="100 0 0 0" Width="200"/>
+						<TextBlock Grid.Row="1" Grid.Column="0" Text="Last Name" Margin="0 10 0 0" HorizontalAlignment="Center"/>
+						<TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding EmployeeLastNameInfo}" Margin="100 0 0 0" Width="200" HorizontalAlignment="Center"/>
 
-					<Button Content="Home" Grid.Row="4" Grid.Column="2" Command="{Binding GoToHomePageCommand}"/>
-				</Grid>
+						<TextBlock Grid.Row="2" Grid.Column="0" Text="User Name" Margin="0 10 0 0" HorizontalAlignment="Center"/>
+						<TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding EmployeeUserNameInfo}" Margin="100 0 0 0" Width="200" HorizontalAlignment="Center"/>
+
+						<TextBlock Grid.Row="3" Grid.Column="0" Text="Administrative Priviliages" Margin="0 10 0 0" />
+						<TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding EmployeeIsAdminInfo}" Margin="100 0 0 0" Width="200" HorizontalAlignment="Center"/>
+
+					</Grid>
+				-->
+						
 			</StackPanel>
+			</Border>
 		</rxui:RoutedViewHost.DefaultContent>
-		<rxui:RoutedViewHost.ViewLocator>
-			<!-- See ViewLocator.cs section below -->
-			<app:AdminHomeViewLocator />
-		</rxui:RoutedViewHost.ViewLocator>
 	</rxui:RoutedViewHost>
+	
 </UserControl>

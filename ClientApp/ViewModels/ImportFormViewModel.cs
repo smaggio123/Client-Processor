@@ -11,6 +11,7 @@ using System.IO;
 using System.Reactive;
 using ClientApp.Models;
 using GrpcServer.Protos;
+using Splat;
 
 namespace ClientApp.ViewModels
 {
@@ -22,11 +23,8 @@ namespace ClientApp.ViewModels
         private static List<byte[]> FilesInBytes = new List<byte[]>();
         private static string[] FileNames = new string[1];
         private static string[] FileExtentions = new string[1];
-        public IScreen HostScreen { get; }
 
-        public string UrlPathSegment { get; } = "ImportForm";
-
-        public RoutingState RouterAdmimHomePageProcedure { get; } = new RoutingState();
+        public RoutingState Router { get; } = new RoutingState();
 
         public ReactiveCommand<Unit, IRoutableViewModel> GoToAdminHome { get; }
 
@@ -163,10 +161,6 @@ namespace ClientApp.ViewModels
             return -1;
         }
 
-
-
-        //View that this viewmodel is attached to
-        ImportFormView _importFormView;
         //Holds the paths of the selected files
         private string _filePaths;
         
@@ -183,15 +177,15 @@ namespace ClientApp.ViewModels
         /// </summary>
         public ImportFormViewModel()
         {
-            GoToAdminHome = ReactiveCommand.CreateFromObservable(
-            () => RouterAdmimHomePageProcedure.Navigate.Execute(new AdminHomeViewModel()));
+            Locator.CurrentMutable.Register(() => new AdminHomeView(), typeof(IViewFor<AdminHomeViewModel>));
+            GoToAdminHome = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new AdminHomeViewModel()));
             //var client = new CompletedForm.CompletedFormClient(Program.gRPCChannel);
             TemplatesResponse templates = GetTemplateNames();
 
 
             foreach (var template in templates.TemplateNames)
             {
-                FormTemplateList.Add(new FormModel(template.FormTemplateName, null, null));
+                FormTemplateList.Add(new FormModel(template.FormTemplateName, string.Empty, Array.Empty<byte>()));
 
             }
         }
@@ -248,9 +242,10 @@ namespace ClientApp.ViewModels
                 await UploadFile(FilesInBytes[i], FileNames[i], FileExtentions[i], NotProcedureForm(), FormTemplate());
             }
 
+            GoToAdminHome.Execute();
 
-            
-          
+
+
         }
 
 
@@ -270,6 +265,10 @@ namespace ClientApp.ViewModels
             }
         }
 
+        //This is for the IRoutableViewModel class
+        public string? UrlPathSegment => throw new System.NotImplementedException();
+        //This is for the IRoutableViewModel class
+        public IScreen HostScreen => throw new System.NotImplementedException();
 
 
     }

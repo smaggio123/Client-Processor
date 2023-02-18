@@ -1,4 +1,5 @@
-﻿using ClientApp.Models;
+﻿/*
+using ClientApp.Models;
 
 namespace ClientApp.ViewModels
 {
@@ -14,3 +15,4 @@ namespace ClientApp.ViewModels
         //private readonly string Password;
     }
 }
+*/

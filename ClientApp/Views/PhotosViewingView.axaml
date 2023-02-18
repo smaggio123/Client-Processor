@@ -13,19 +13,12 @@
 		<ext:BitmapAssetValueConverter x:Key="variableImage"/>
 	</UserControl.Resources>
 
-	<UserControl.Styles>
-		<Style Selector="Button">
-			<Setter Property="Background" Value="#161616"/>
-		</Style>
-	</UserControl.Styles>
-
-
-	<rxui:RoutedViewHost Grid.Row="0" Router="{Binding BackRouter}" PageTransition="{x:Null}">
+	<rxui:RoutedViewHost Grid.Row="0" Router="{Binding Router}">
 		<rxui:RoutedViewHost.DefaultContent>
 			<ScrollViewer VerticalScrollBarVisibility="Auto">
 				<Grid HorizontalAlignment="Center" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,500,Auto" ShowGridLines="False">
-					<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Photos" FontSize="30.0" Grid.Row="0" Grid.Column="1"/>
-					<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Before" FontSize="30.0" Grid.Row="3" Grid.Column="1"/>
+					<TextBlock Classes="h1 horizontalCenter verticalCenter" Text="Photos" Grid.Row="0" Grid.Column="1"/>
+					<TextBlock Classes="h1 horizontalCenter verticalCenter" Text="Before" Grid.Row="3" Grid.Column="1"/>
 					<ItemsControl Margin="0 00 0 0" Grid.Row="4" Grid.Column="1" Items="{Binding ImageBefore}">
 						<ItemsControl.ItemsPanel>
 						</ItemsControl.ItemsPanel>
@@ -35,7 +28,7 @@
 						</DataTemplate>
 					</ItemsControl.ItemTemplate>
 					</ItemsControl>
-					<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="After" FontSize="30.0" Grid.Row="5" Grid.Column="1"/>
+					<TextBlock Classes="h1 horizontalCenter verticalCenter" Text="After" Grid.Row="5" Grid.Column="1"/>
 					<ItemsControl Margin="0 00 0 0" Grid.Row="6" Grid.Column="1" Items="{Binding ImageAfter}">
 						<ItemsControl.ItemsPanel>
 						</ItemsControl.ItemsPanel>
@@ -45,13 +38,10 @@
 							</DataTemplate>
 						</ItemsControl.ItemTemplate>
 					</ItemsControl>
-					<Button Content="Back" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Grid.Column="1" Command="{Binding GoBackCommand}"/>
+					<Button Classes="verticalCenter horizontalCenter" Content="Back" Grid.Row="1" Grid.Column="1" Command="{Binding GoBackCommand}"/>
 				</Grid>
 			</ScrollViewer>
 		</rxui:RoutedViewHost.DefaultContent>
-		<rxui:RoutedViewHost.ViewLocator>
-			<!-- See ViewLocator.cs section below -->
-			<app:ProcedureReadViewLocator/>
-		</rxui:RoutedViewHost.ViewLocator>
 	</rxui:RoutedViewHost>
+	
 </UserControl>
