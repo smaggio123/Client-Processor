@@ -22,7 +22,7 @@ namespace ClientApp.ViewModels
         private ObservableCollection<string> _displayedProcedures = new();
 
         public static int Procedure_Id { get; set; }
-        public static ProcedureModel SelectedProcedure { get; set; }
+        public static ProcedureModel? SelectedProcedure { get; set; }
 
         //Determines if an element has been selected in the list view
         private bool _selectButtonEnabled;
@@ -44,7 +44,7 @@ namespace ClientApp.ViewModels
         public RoutingState Router { get; } = new RoutingState();
 
         public ReactiveCommand<Unit, IRoutableViewModel> GoHome { get; }
-        public ReactiveCommand<Unit, IRoutableViewModel> MakeProcedurePage { get; }
+        public ReactiveCommand<Unit, IRoutableViewModel>? MakeProcedurePage { get; }
         public ReactiveCommand<Unit, IRoutableViewModel> GoToReadProcedureView { get; }
         public ReactiveCommand<Unit, IRoutableViewModel> NavigateToInitializeProcedure { get; }
         public ReactiveCommand<Unit, IRoutableViewModel> NavigateToUpdateProcedure { get; }
@@ -55,7 +55,7 @@ namespace ClientApp.ViewModels
         public List<int> ListOfProcedureIDs { get; set; } = new();
 
 
-        public void SelectionChanged(object sender, SelectionModelSelectionChangedEventArgs e)
+        public void SelectionChanged(object? sender, SelectionModelSelectionChangedEventArgs e)
         {
             // ... handle selection changed
             //Automatically uploads procedure id
@@ -65,7 +65,7 @@ namespace ClientApp.ViewModels
                 SelectedProcedure = _procedures[Selection.SelectedIndex];
                 SelectButtonEnabled = true;
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 Procedure_Id = ListOfProcedureIDs[0];
                 SelectedProcedure = _procedures[0];
@@ -138,8 +138,8 @@ namespace ClientApp.ViewModels
             GoToReadProcedureView.Execute();
         }
 
-        public static string ProcedureName { get; set; }
-        public static string ProcedureNotes { get; set; }
+        public static string ProcedureName { get; set; } = string.Empty;
+        public static string ProcedureNotes { get; set; } = string.Empty;
         public void GoToUpdateProcedurePageCommand()
         {
             ProcedureName = _procedures[Selection.SelectedIndex].ProcedureName;

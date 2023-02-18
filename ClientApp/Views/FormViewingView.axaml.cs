@@ -17,9 +17,9 @@ namespace ClientApp.Views
     {
         public static class Globals
         {
-            public static string GName;
-            public static string GExtent;
-            public static byte[] GBytes;
+            public static string GName = string.Empty;
+            public static string GExtent = string.Empty;
+            public static byte[] GBytes = Array.Empty<byte>();
         }
         public FormViewingView()
         {

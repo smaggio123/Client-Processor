@@ -2,11 +2,11 @@
 {
     public class Customer
     {
-        public int Client_ID { get; }
-        public string FirstName { get; }
-        public string LastName { get; }
-        public string PhoneNumber { get; }
-        public string Email { get; }
+        public int Client_ID { get; } = -1;
+        public string FirstName { get; } = string.Empty;
+        public string LastName { get; } = string.Empty;
+        public string PhoneNumber { get; } = string.Empty;
+        public string Email { get; } = string.Empty;
 
 
         public Customer()

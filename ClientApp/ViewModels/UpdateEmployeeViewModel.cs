@@ -37,16 +37,20 @@ namespace ClientApp.ViewModels
         public UpdateEmployeeViewModel()
         {
             //This information is the info that will be shown in the text boxes
-            EmployeeFirstNameInfo = AdminHomeViewModel.SelectedEmployee.FirstName;
-            EmployeeLastNameInfo = AdminHomeViewModel.SelectedEmployee.LastName;
-            EmployeeUserNameInfo = AdminHomeViewModel.SelectedEmployee.UserName;
-            EmployeeIsAdminInfo = AdminHomeViewModel.SelectedEmployee.IsAdmin;
+            if (AdminHomeViewModel.SelectedEmployee != null)
+            {
+                EmployeeFirstNameInfo = AdminHomeViewModel.SelectedEmployee.FirstName;
+                EmployeeLastNameInfo = AdminHomeViewModel.SelectedEmployee.LastName;
+                EmployeeUserNameInfo = AdminHomeViewModel.SelectedEmployee.UserName;
+                EmployeeIsAdminInfo = AdminHomeViewModel.SelectedEmployee.IsAdmin;
+                
+                //This information is the info that will be used when the user clicks on a reset button
+                CurrentFirstNameInfo = AdminHomeViewModel.SelectedEmployee.FirstName;
+                CurrentLastNameInfo = AdminHomeViewModel.SelectedEmployee.LastName;
+                CurrentUserNameInfo = AdminHomeViewModel.SelectedEmployee.UserName;
+                CurrentIsAdminInfo = AdminHomeViewModel.SelectedEmployee.IsAdmin;
+            }
 
-            //This information is the info that will be used when the user clicks on a reset button
-            CurrentFirstNameInfo = AdminHomeViewModel.SelectedEmployee.FirstName;
-            CurrentLastNameInfo = AdminHomeViewModel.SelectedEmployee.LastName;
-            CurrentUserNameInfo = AdminHomeViewModel.SelectedEmployee.UserName;
-            CurrentIsAdminInfo = AdminHomeViewModel.SelectedEmployee.IsAdmin;
 
             Locator.CurrentMutable.Register(() => new AdminHomeView(), typeof(IViewFor<AdminHomeViewModel>));
             NavigateToAdminHomePage = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new AdminHomeViewModel()));
@@ -79,17 +83,22 @@ namespace ClientApp.ViewModels
 
             //Initializing updated employee
             CurrentIsAdminInfo = EmployeeIsAdminInfo;
-            EmployeeInfo newInfo = new()
+            if (AdminHomeViewModel.SelectedEmployee != null)
             {
-                EmployeeId = AdminHomeViewModel.SelectedEmployee.ID,
-                FirstName = CurrentFirstNameInfo,
-                LastName = CurrentLastNameInfo,
-                Credentials = new LoginCredentials() { Username = CurrentUserNameInfo, Password = CurrentPasswordInfo },
-                IsAdmin = CurrentIsAdminInfo
-            };
+                EmployeeInfo newInfo = new()
+                {
+                    EmployeeId = AdminHomeViewModel.SelectedEmployee.ID,
+                    FirstName = CurrentFirstNameInfo,
+                    LastName = CurrentLastNameInfo,
+                    Credentials = new LoginCredentials() { Username = CurrentUserNameInfo, Password = CurrentPasswordInfo },
+                    IsAdmin = CurrentIsAdminInfo
+                };
 
-            //Sends updated client to database
-            ServiceStatus status = employee.updateEmployee(newInfo);
+                //Sends updated client to database
+                //ServiceStatus status = 
+                employee.updateEmployee(newInfo);
+
+            }
             //Takes user back to admin home page
             NavigateToAdminHomePage.Execute();
         }

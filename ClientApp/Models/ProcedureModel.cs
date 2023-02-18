@@ -2,12 +2,12 @@
 {
     public class ProcedureModel
     {
-        public int Procedure_ID { get; }
-        public string ProcedureName { get; }
-        public string procedureDate{ get; }
-        public int Cleint_ID { get; }
-        public int EmployeeID { get; }
-        public string procedureNotes { get; }
+        public int Procedure_ID { get; } = -1;
+        public string ProcedureName { get; } = string.Empty;
+        public string procedureDate{ get; } = string.Empty;
+        public int Cleint_ID { get; } = -1;
+        public int EmployeeID { get; } = -1;
+        public string procedureNotes { get; } = string.Empty;
 
         ProcedureModel()
         {

@@ -9,9 +9,9 @@ namespace ClientApp.ViewModels
 {
     public class InitializeProcedureViewModel : ReactiveObject, IRoutableViewModel
     {
-        public string _ProcedureName { get; set; }
-        public string _ProcedureDescription { get; set; }
-        public static int CurrentProcedureID { get; set; }
+        public string _ProcedureName { get; set; } = string.Empty;
+        public string _ProcedureDescription { get; set; } = string.Empty;
+        public static int CurrentProcedureID { get; set; } = -1;
 
         public RoutingState Router { get; } = new RoutingState();
         public ReactiveCommand<Unit, IRoutableViewModel> NavigateToMakeProcedure { get; }

@@ -13,8 +13,6 @@ namespace ClientApp.ViewModels
 {
     public class FormFillingViewModel : ReactiveObject, IRoutableViewModel
     {
-
-
         public List<FormInputField> InputFields { get; } = new List<FormInputField>();
         public ObservableCollection<string> UserInputList { get; set; } = new ObservableCollection<string>();
 
@@ -49,7 +47,7 @@ namespace ClientApp.ViewModels
             procedureClient = new Procedure.ProcedureClient(Program.gRPCChannel);
             name = new() { FormName_ = FormMenuViewModel.FormName };
             formFields = procedureClient.getFormFields(name);
-            int index = 0;
+            //int index = 0;
             foreach (var field in formFields.Fields)
             {
                 if (field.FieldType.Equals("iText.Forms.Fields.PdfTextFormField"))

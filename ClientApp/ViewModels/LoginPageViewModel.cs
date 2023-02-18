@@ -10,17 +10,17 @@ namespace ClientApp.ViewModels
     public class LoginPageViewModel : ReactiveObject, INotifyPropertyChanged,IRoutableViewModel
     {
         //Holds current user
-        public static string GlobalUserName { get; set; }
+        public static string GlobalUserName { get; set; } = string.Empty;
         public static int GlobalEmployeeID{ get; set; }
 
         //Holds whether the user has admin privilages
         public static bool GlobalIsAdmin { get; set; }
-        
+
         //Holds the username input
-        public string UserName { get; set; }
+        public string UserName { get; set; } = string.Empty;
         
         //Holds the password input
-        public string Password {get;set;}
+        public string Password {get;set;} = string.Empty;
 
         //Tracks number of invalid login attempts
         public static int InvalidCredentialsCount { get; set; }

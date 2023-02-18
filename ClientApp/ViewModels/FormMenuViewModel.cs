@@ -43,7 +43,7 @@ namespace ClientApp.ViewModels
         public ReactiveCommand<Unit, IRoutableViewModel> NavigateToMakeProcedure{ get; }
         public ReactiveCommand<Unit, IRoutableViewModel> NavigateToFillOutForms{ get; }
 
-        public static string FormName { get; set; }
+        public static string FormName { get; set; } = string.Empty;
 
         public FormMenuViewModel()
         {
@@ -81,7 +81,7 @@ namespace ClientApp.ViewModels
         }
 
 
-        public void SelectionChanged(object sender, SelectionModelSelectionChangedEventArgs e)
+        public void SelectionChanged(object? sender, SelectionModelSelectionChangedEventArgs e)
         {
             // ... handle selection changed
             
@@ -90,13 +90,13 @@ namespace ClientApp.ViewModels
 
         public void SelectFormTemplate()
         {
-            CurrentlySelectedForms.Add(FormTemplateSelection.SelectedItem);
+            if(FormTemplateSelection.SelectedItem!=null) CurrentlySelectedForms.Add(FormTemplateSelection.SelectedItem);
             //MessageBox.Avalonia.MessageBoxManager.GetMessageBoxStandardWindow("title", "Selection: "+ FormTemplateSelection.SelectedItem).Show();
         }
 
         public void GoToFillOutForm()
         {
-            FormName = FormTemplateSelection.SelectedItem.FileName;
+            if(FormTemplateSelection.SelectedItem!=null) FormName = FormTemplateSelection.SelectedItem.FileName;
             NavigateToFillOutForms.Execute();
         }
 

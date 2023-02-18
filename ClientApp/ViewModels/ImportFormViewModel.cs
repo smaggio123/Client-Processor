@@ -126,7 +126,7 @@ namespace ClientApp.ViewModels
 
             for (int i = 0; i < FilePaths.Length; i++)
             {
-                string FileNameAndExtention = null;
+                string FileNameAndExtention = string.Empty;
                 FileNameAndExtention = Path.GetFileName(FilePaths[i]);
 
                 string[] FileNE = FileNameAndExtention.Split('.');
@@ -162,7 +162,7 @@ namespace ClientApp.ViewModels
         }
 
         //Holds the paths of the selected files
-        private string _filePaths;
+        private string _filePaths = string.Empty;
         
         public string FilePaths
         {

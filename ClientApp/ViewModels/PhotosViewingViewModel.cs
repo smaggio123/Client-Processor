@@ -127,7 +127,7 @@ namespace ClientApp.ViewModels
 
             foreach (Photo x in photos)
             {
-                await ByteArrayToImage(x.PhotoBytes.ToArray(), x.PhotoName, x.PhotoExtension);
+                ByteArrayToImage(x.PhotoBytes.ToArray(), x.PhotoName, x.PhotoExtension);
 
             }
 
@@ -223,7 +223,7 @@ namespace ClientApp.ViewModels
 
             foreach (Photo x in photos)
             {
-                await ByteArrayToImage2(x.PhotoBytes.ToArray(),x.PhotoName,x.PhotoExtension);
+                ByteArrayToImage2(x.PhotoBytes.ToArray(),x.PhotoName,x.PhotoExtension);
 
             }
 
@@ -250,8 +250,10 @@ namespace ClientApp.ViewModels
         /// takes a byte array and converts it to an image
         /// </summary>
         /// <param name="byteArrayIn"></param>
-        public static async Task<int> ByteArrayToImage(byte[] byteArrayIn, string Name, string Exte)
+        //public static async Task<int> ByteArrayToImage(byte[] byteArrayIn, string Name, string Exte)
+        public static int ByteArrayToImage(byte[] byteArrayIn, string Name, string Exte)
         {
+            //await MessageBox.Avalonia.MessageBoxManager.GetMessageBoxStandardWindow("title","something").Show();
             using (Image image = Image.FromStream(new MemoryStream(byteArrayIn)))
             {
                 image.Save(Name + Exte, ImageFormat.Png);  // Or Png
@@ -260,7 +262,7 @@ namespace ClientApp.ViewModels
         }
 
 
-        public static async Task<int> ByteArrayToImage2(byte[] byteArrayIn,string Name,string Exte)
+        public static int ByteArrayToImage2(byte[] byteArrayIn,string Name,string Exte)
         {
             using (Image image = Image.FromStream(new MemoryStream(byteArrayIn)))
             {

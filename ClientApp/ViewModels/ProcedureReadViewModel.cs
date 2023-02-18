@@ -7,8 +7,8 @@ namespace ClientApp.ViewModels
 {
     public class ProcedureReadViewModel : ReactiveObject, IRoutableViewModel
     {
-        public string NameOfProcedure { get; set; }
-        public string NotesOfProcedure { get; set; }
+        public string NameOfProcedure { get; set; } = string.Empty;
+        public string NotesOfProcedure { get; set; } = string.Empty;
 
         public RoutingState Router { get; } = new RoutingState();
 
@@ -21,8 +21,8 @@ namespace ClientApp.ViewModels
 
             //ClientProcedureListingViewModel.Procedure_Id
             //ClientProcedureListingViewModel.SelectedProcedure
-            NameOfProcedure = ClientProcedureListingViewModel.SelectedProcedure.ProcedureName;
-            NotesOfProcedure = ClientProcedureListingViewModel.SelectedProcedure.procedureNotes;
+            if(ClientProcedureListingViewModel.SelectedProcedure!=null)NameOfProcedure = ClientProcedureListingViewModel.SelectedProcedure.ProcedureName;
+            if (ClientProcedureListingViewModel.SelectedProcedure != null) NotesOfProcedure = ClientProcedureListingViewModel.SelectedProcedure.procedureNotes;
             Locator.CurrentMutable.Register(() => new PhotosViewingView(), typeof(IViewFor<PhotosViewingViewModel>));
             GoToViewPhotos = ReactiveCommand.CreateFromObservable(() => Router.Navigate.Execute(new PhotosViewingViewModel()));
 
