@@ -13,14 +13,14 @@
 	</UserControl.Resources>
 	<rxui:RoutedViewHost Grid.Row="0" Router="{Binding Router}">
 		<rxui:RoutedViewHost.DefaultContent>
-			<ScrollViewer Height="800" VerticalScrollBarVisibility="Auto">
-				<Grid HorizontalAlignment="Center" RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,300,Auto" ShowGridLines="False">
-					<TextBlock Classes="h1 horizontalCenter verticalCenter" Text="Forms" Grid.Row="0" Grid.Column="1" Margin="0 50 0 0"/>
-					<Button Classes="verticalCenter horizontalCenter" Content="Back" Grid.Row="0" Grid.Column="2" Command="{Binding GoBackCommand}" Margin="0 50 0 0"/>
-					<StackPanel x:Name="ParentStackPanel" Grid.Row="1" Grid.Column="1">
-					</StackPanel>
-				</Grid>
-			</ScrollViewer>
+			<Grid HorizontalAlignment="Center" RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,Auto,Auto" ShowGridLines="False">
+				<TextBlock Classes="h1 horizontalCenter verticalCenter" Text="Forms" Grid.Row="0" Grid.Column="1" Margin="0 50 0 0"/>
+				<Button Classes="verticalCenter horizontalCenter" Content="Back" Grid.Row="0" Grid.Column="2" Command="{Binding GoBackCommand}" Margin="0 50 0 0"/>
+				<ScrollViewer Name="scroller" Grid.Row="1" Grid.Column="1" Height="900" VerticalScrollBarVisibility="Auto">
+						<StackPanel x:Name="ParentStackPanel" >
+						</StackPanel>
+				</ScrollViewer>
+			</Grid>
 		</rxui:RoutedViewHost.DefaultContent>
 	</rxui:RoutedViewHost>
 	

@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 using System.Threading;
 using System;
 using Avalonia.Media.Imaging;
+using Avalonia.Platform;
+using Avalonia.Layout;
+using Avalonia;
 
 namespace ClientApp.Views
 {
